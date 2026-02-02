@@ -1,0 +1,5 @@
+{
+  "name": "Dataindsamling og sortering",
+  "description": "Et interaktivt læringsspil for børn, der kombinerer sortering af objekter med live datavisualisering og AI-genererede quizzer.",
+  "requestFramePermissions": []
+}
