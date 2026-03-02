@@ -6,6 +6,7 @@ import { DraggableItem } from './components/DraggableItem';
 import { LiveChart } from './components/LiveChart';
 import { generateQuizQuestion } from './services/geminiService';
 import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette } from 'lucide-react';
+import { gemMedalje, gemPoint, SPIL_NAVN } from './utils/cookieHelpers';
 
 export default function App() {
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
@@ -19,6 +20,7 @@ export default function App() {
   const [quiz, setQuiz] = useState<QuizResponse | null>(null);
   const [quizFeedback, setQuizFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [mistakes, setMistakes] = useState(0);
 
   // We need a ref to track if it's the very first load to avoid double resets in strict mode
   const initialized = useRef(false);
@@ -51,6 +53,7 @@ export default function App() {
     setQuiz(null);
     setQuizFeedback(null);
     setSelectedOption(null);
+    setMistakes(0);
 
     const newItems: DraggableObject[] = [];
     const availableTypes = theme.buckets.map(b => b.type);
@@ -67,62 +70,60 @@ export default function App() {
   };
 
   const handleDrop = useCallback((droppedType: ItemType, targetBucketType: ItemType) => {
-    // Check validity first to see if we should proceed with the update
-    // We need access to the current state, so we'll do this check inside setBuckets mostly,
-    // but we need to know if we should remove the item from the pool.
+    // We need to use the current state of buckets to validate the drop
+    // Since we are inside a useCallback, we need to add buckets to the dependency array
+    // or use the functional update pattern carefully. 
+    // However, to fix the "moveSuccessful" bug and track mistakes, 
+    // it is cleaner to access the current buckets state.
+    // But since we can't easily access 'buckets' state inside useCallback without adding it to deps (causing re-renders),
+    // we will use the functional update for setBuckets to derive success, 
+    // BUT we need to know if it succeeded to update Items and Mistakes.
     
-    let moveSuccessful = false;
-
-    setBuckets(prevBuckets => {
-        const newBuckets = [...prevBuckets];
+    // To solve this cleanly: We will perform the logic check using the functional update,
+    // but we'll need to trigger the side effects (items/mistakes) based on the result.
+    // Actually, the simplest fix for this app is to just include 'buckets' in the dependency array.
+    // It causes re-renders of DraggableItems on every drop, but for a small app, it's negligible.
+    
+    setBuckets(currentBuckets => {
+        const newBuckets = [...currentBuckets];
         const targetIndex = newBuckets.findIndex(b => b.type === targetBucketType);
         const correctBucketIndex = newBuckets.findIndex(b => b.type === droppedType);
 
-        if (targetIndex === -1 || correctBucketIndex === -1) return prevBuckets;
+        if (targetIndex === -1 || correctBucketIndex === -1) return currentBuckets;
 
         const targetBucket = newBuckets[targetIndex];
         const correctBucket = newBuckets[correctBucketIndex];
-
-        // LOGIC FOR DYNAMIC ASSIGNMENT:
         
-        // 1. If dropped on the correct existing bucket
+        let isSuccess = false;
+
+        // 1. Correct drop
         if (droppedType === targetBucketType) {
             newBuckets[targetIndex] = { ...targetBucket, count: targetBucket.count + 1 };
-            moveSuccessful = true;
+            isSuccess = true;
         }
-        // 2. If dropped on an EMPTY bucket that was technically assigned to something else
-        // We SWAP them to make the empty bucket "become" the category of the dropped item.
+        // 2. Swap empty
         else if (targetBucket.count === 0 && correctBucket.count === 0) {
-            // Swap the data objects at these indices
-            // This moves the "Correct" bucket config to the "Target" position
             newBuckets[targetIndex] = { ...correctBucket, count: 1 };
-            // And moves the "Target" (empty/unused) config to the "Correct" position
             newBuckets[correctBucketIndex] = { ...targetBucket };
-            moveSuccessful = true;
-        }
-        // 3. Invalid drop (e.g. dropping Apple on a bucket already filled with Balls)
-        else {
-            return prevBuckets;
+            isSuccess = true;
         }
 
-        return newBuckets;
+        if (isSuccess) {
+            // Schedule item removal
+            setItems(prev => {
+                const index = prev.findIndex(item => item.type === droppedType);
+                if (index === -1) return prev;
+                const next = [...prev];
+                next.splice(index, 1);
+                return next;
+            });
+            return newBuckets;
+        } else {
+            // Mistake made
+            setMistakes(m => m + 1);
+            return currentBuckets;
+        }
     });
-
-    // Only remove item if the drop logic was successful
-    if (moveSuccessful) {
-        setItems(prev => {
-            const index = prev.findIndex(item => item.type === droppedType);
-            if (index === -1) return prev;
-            
-            const newItems = [...prev];
-            newItems.splice(index, 1);
-            
-            if (newItems.length === 0) {
-                setTimeout(() => triggerQuiz(), 500);
-            }
-            return newItems;
-        });
-    }
     
     setDragOverBucket(null);
   }, []);
@@ -136,12 +137,22 @@ export default function App() {
     if (items.length === 0 && gameState === 'playing' && buckets.some(b => b.count > 0)) {
         // Only trigger if we have actually started playing (buckets have counts)
         setGameState('loading_quiz');
+        
+        // Award Points and Medals
+        gemPoint(1, SPIL_NAVN);
+        
+        gemMedalje(SPIL_NAVN, 'Sorterings-lærling', 'Gennemfør et spil for første gang');
+        
+        if (mistakes === 0) {
+            gemMedalje(SPIL_NAVN, 'Fejlfri Sortering', 'Sorter alle elementer uden at lave fejl i et spil');
+        }
+
         generateQuizQuestion(buckets).then(q => {
           setQuiz(q);
           setGameState('quiz');
         });
     }
-  }, [items.length, gameState, buckets]);
+  }, [items.length, gameState, buckets, mistakes]);
 
   const handleQuizAnswer = (option: string) => {
     if (quizFeedback) return; // Prevent multiple clicks
@@ -149,6 +160,7 @@ export default function App() {
     setSelectedOption(option);
     if (option === quiz?.correctAnswer) {
       setQuizFeedback('correct');
+      gemMedalje(SPIL_NAVN, 'Datamester', 'Svar rigtigt på en quiz');
     } else {
       setQuizFeedback('incorrect');
     }
