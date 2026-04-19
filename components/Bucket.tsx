@@ -3,7 +3,7 @@ import { BucketData, ItemType } from '../types';
 
 interface BucketProps {
   data: BucketData;
-  onDrop: (droppedType: ItemType, targetBucketType: ItemType) => void;
+  onDrop: (droppedType: ItemType, targetBucketType: ItemType, droppedId: string) => void;
   isOver: boolean;
   onDragOver: (e: React.DragEvent) => void;
   onDragLeave: () => void;
@@ -13,9 +13,9 @@ export const Bucket: React.FC<BucketProps> = ({ data, onDrop, isOver, onDragOver
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     const droppedType = e.dataTransfer.getData('type') as ItemType;
-    // We pass both the dropped item type AND this bucket's current assigned type
-    // This allows the parent to handle the "Swap" logic if the bucket is empty
-    onDrop(droppedType, data.type);
+    const droppedId = e.dataTransfer.getData('id');
+    // We pass both the dropped item type AND this bucket's current assigned type, plus the exact item ID
+    onDrop(droppedType, data.type, droppedId);
   };
 
   const Icon = data.icon;

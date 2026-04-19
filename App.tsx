@@ -5,7 +5,7 @@ import { Bucket } from './components/Bucket';
 import { DraggableItem } from './components/DraggableItem';
 import { LiveChart } from './components/LiveChart';
 import { generateQuizQuestion } from './services/geminiService';
-import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette } from 'lucide-react';
+import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette, ArrowRight, Play, ArrowUp, ArrowDown } from 'lucide-react';
 import { gemMedalje, gemPoint, SPIL_NAVN } from './utils/cookieHelpers';
 
 export default function App() {
@@ -21,6 +21,7 @@ export default function App() {
   const [quizFeedback, setQuizFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [mistakes, setMistakes] = useState(0);
+  const [tutorialStep, setTutorialStep] = useState(1);
 
   // We need a ref to track if it's the very first load to avoid double resets in strict mode
   const initialized = useRef(false);
@@ -69,13 +70,7 @@ export default function App() {
     setItems(newItems);
   };
 
-  const handleDrop = useCallback((droppedType: ItemType, targetBucketType: ItemType) => {
-    // We need to use the current state of buckets to validate the drop
-    // Since we are inside a useCallback, we need to add buckets to the dependency array
-    // or use the functional update pattern carefully. 
-    // However, to fix the "moveSuccessful" bug and track mistakes, 
-    // it is cleaner to access the current buckets state.
-    // But since we can't easily access 'buckets' state inside useCallback without adding it to deps (causing re-renders),
+  const handleDrop = useCallback((droppedType: ItemType, targetBucketType: ItemType, droppedId: string) => {
     // we will use the functional update for setBuckets to derive success, 
     // BUT we need to know if it succeeded to update Items and Mistakes.
     
@@ -109,12 +104,13 @@ export default function App() {
         }
 
         if (isSuccess) {
-            // Schedule item removal
+            // Mark the EXACT dropped item as sorted
             setItems(prev => {
-                const index = prev.findIndex(item => item.type === droppedType);
-                if (index === -1) return prev;
                 const next = [...prev];
-                next.splice(index, 1);
+                const index = next.findIndex(item => item.id === droppedId && !item.isSorted);
+                if (index !== -1) {
+                   next[index] = { ...next[index], isSorted: true };
+                }
                 return next;
             });
             return newBuckets;
@@ -134,7 +130,8 @@ export default function App() {
 
   // Watch for game completion
   useEffect(() => {
-    if (items.length === 0 && gameState === 'playing' && buckets.some(b => b.count > 0)) {
+    const allSorted = items.length > 0 && items.every(item => item.isSorted);
+    if (allSorted && gameState === 'playing' && buckets.some(b => b.count > 0)) {
         // Only trigger if we have actually started playing (buckets have counts)
         setGameState('loading_quiz');
         
@@ -152,7 +149,17 @@ export default function App() {
           setGameState('quiz');
         });
     }
-  }, [items.length, gameState, buckets, mistakes]);
+  }, [items, gameState, buckets, mistakes]);
+
+  const totalSorted = buckets.reduce((acc, b) => acc + b.count, 0);
+
+  const nextTutorialStep = () => {
+    if (tutorialStep >= 3) {
+      setTutorialStep(0);
+    } else {
+      setTutorialStep(s => s + 1);
+    }
+  };
 
   const handleQuizAnswer = (option: string) => {
     if (quizFeedback) return; // Prevent multiple clicks
@@ -189,14 +196,61 @@ export default function App() {
         </button>
       </header>
 
+      {/* Spotlight Tutorial Overlay Backdrop */}
+      {tutorialStep > 0 && (
+        <div className="fixed inset-0 bg-indigo-900/60 z-[50] transition-opacity duration-500"></div>
+      )}
+
+      {/* Spotlight Tutorial Text & Button */}
+      {tutorialStep > 0 && (
+        <div className={`fixed inset-0 z-[70] pointer-events-none flex flex-col items-center transition-opacity duration-500 p-4 sm:p-8
+           ${tutorialStep === 1 ? 'justify-end pb-8 sm:pb-12' : ''}
+           ${tutorialStep === 2 ? 'justify-start pt-8 sm:pt-12' : ''}
+           ${tutorialStep === 3 ? 'justify-start pt-8 sm:pt-12 lg:justify-center lg:items-start lg:pl-12' : ''}
+        `}>
+           {/* Pilen til Step 1 peger OP, så den skal ligge over tekstboksen */}
+           {tutorialStep === 1 && <ArrowUp size={80} className="animate-bounce mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]" />}
+           
+           <div className="flex flex-col items-center text-center px-4 animate-bounce-in max-w-xl pointer-events-auto bg-indigo-900/70 p-6 sm:p-8 rounded-3xl backdrop-blur-md border-2 border-white/30 shadow-2xl relative">
+             {/* Pilen til Step 3 (desktop) peger HØJRE, så den sættes absolut til højre */}
+             {tutorialStep === 3 && <ArrowRight size={80} className="absolute -right-24 top-1/2 -translate-y-1/2 animate-bounce text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] hidden lg:block" />}
+             
+             <h2 className="text-3xl sm:text-4xl font-black text-white mb-4 drop-shadow-md">
+               {tutorialStep === 1 && "Se på alle tingene!"}
+               {tutorialStep === 2 && "Bestem kasserne!"}
+               {tutorialStep === 3 && "Se grafen vokse!"}
+             </h2>
+             <p className="text-lg sm:text-xl font-bold text-white mb-8 drop-shadow-md">
+               {tutorialStep === 1 && "Kan du hjælpe med at rydde op? Her er en masse sjove ting."}
+               {tutorialStep === 2 && "Træk en ting ned i en tom kasse. Så bestemmer du, hvad der skal bo i den!"}
+               {tutorialStep === 3 && "Seje sager! Når du sorterer, vokser grafen automatisk."}
+             </p>
+             <button 
+                onClick={nextTutorialStep}
+                className="bg-white text-indigo-800 hover:bg-indigo-100 font-black text-xl sm:text-2xl px-10 py-4 rounded-full flex items-center gap-3 transition-transform active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.5)] cursor-pointer"
+             >
+                {tutorialStep < 3 ? (
+                  <>Næste <ArrowRight size={28} /></>
+                ) : (
+                  <>Start Spil <Play size={28} /></>
+                )}
+             </button>
+           </div>
+
+           {/* Pilene til Step 2 og Step 3(mobil) peger NED, så de skal ligge under tekstboksen */}
+           {tutorialStep === 2 && <ArrowDown size={80} className="animate-bounce mt-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]" />}
+           {tutorialStep === 3 && <ArrowDown size={80} className="animate-bounce mt-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] lg:hidden" />}
+        </div>
+      )}
+
       {/* Main Content Grid */}
-      <div className="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6 relative">
         
         {/* LEFT: Game Area (Sorting + Items) */}
         <div className="lg:col-span-8 flex flex-col gap-6">
-          
+
           {/* Item Pool (The "Table") */}
-          <div className="bg-white rounded-3xl p-6 shadow-lg min-h-[200px] lg:min-h-[300px] border-4 border-dashed border-gray-200 relative overflow-hidden">
+          <div className={`bg-white rounded-3xl p-6 shadow-lg min-h-[200px] lg:min-h-[300px] border-4 border-dashed border-gray-200 overflow-hidden ${tutorialStep === 1 ? 'relative z-[60] ring-8 ring-white ring-offset-4 ring-offset-indigo-500 bg-white/100 scale-[1.02] transition-all' : ''}`}>
             
             {gameState === 'playing' ? (
               <>
@@ -209,12 +263,16 @@ export default function App() {
                      // Find config for this item type to render correct icon/color
                      const config = buckets.find(b => b.type === item.type);
                      if (!config) return null;
-                     return <DraggableItem key={item.id} item={item} bucketConfig={config} />;
+                     return (
+                       <div key={item.id} className={`transition-opacity duration-300 ${item.isSorted ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                         <DraggableItem item={item} bucketConfig={config} />
+                       </div>
+                     );
                   })}
-                  {items.length === 0 && (
-                     <div className="text-center animate-pulse">
-                        <Trophy size={64} className="mx-auto text-yellow-400 mb-2" />
-                        <h3 className="text-2xl font-bold text-gray-400">Godt gået!</h3>
+                  {items.length > 0 && items.every(i => i.isSorted) && (
+                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm z-10 animate-pulse rounded-3xl">
+                        <Trophy size={64} className="text-yellow-400 mb-2" />
+                        <h3 className="text-3xl font-black text-indigo-900">Godt gået!</h3>
                      </div>
                   )}
                 </div>
@@ -287,7 +345,7 @@ export default function App() {
           </div>
 
           {/* Buckets Zone */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-auto">
+          <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 mt-auto rounded-3xl p-4 -m-4 ${tutorialStep === 2 ? 'relative z-[60] ring-8 ring-white ring-offset-4 ring-offset-indigo-500 bg-white scale-[1.02] transition-all' : ''}`}>
             {buckets.map((bucket) => (
               <Bucket
                 key={bucket.type}
@@ -309,7 +367,7 @@ export default function App() {
         </div>
 
         {/* RIGHT: Live Chart */}
-        <div className="lg:col-span-4 h-[300px] lg:h-auto sticky top-4">
+        <div className={`lg:col-span-4 h-[300px] lg:h-auto sticky top-4 rounded-3xl ${tutorialStep === 3 ? 'relative z-[60] ring-8 ring-white ring-offset-4 ring-offset-indigo-500 bg-white scale-[1.02] transition-all' : ''}`}>
            <LiveChart data={buckets} />
         </div>
 

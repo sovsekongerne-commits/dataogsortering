@@ -55,6 +55,7 @@ export interface BucketData {
 export interface DraggableObject {
   id: string;
   type: ItemType;
+  isSorted?: boolean;
 }
 
 export interface QuizQuestion {
