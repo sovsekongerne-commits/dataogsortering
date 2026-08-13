@@ -5,8 +5,9 @@ import { Bucket } from './components/Bucket';
 import { DraggableItem } from './components/DraggableItem';
 import { LiveChart } from './components/LiveChart';
 import { generateQuizQuestion } from './services/geminiService';
-import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette, ArrowRight, Play, ArrowUp, ArrowDown } from 'lucide-react';
+import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette, ArrowRight, Play, ArrowUp, ArrowDown, Printer } from 'lucide-react';
 import { gemMedalje, gemPoint, SPIL_NAVN } from './utils/cookieHelpers';
+import { WorksheetPreview, WorksheetPrintPage, WorksheetItem, BookletPage, BookletFrontPage } from './components/WorksheetPreview';
 
 export default function App() {
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
@@ -22,6 +23,8 @@ export default function App() {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [mistakes, setMistakes] = useState(0);
   const [tutorialStep, setTutorialStep] = useState(1);
+  const [isWorksheetOpen, setIsWorksheetOpen] = useState(false);
+  const [bookletPages, setBookletPages] = useState<BookletPage[]>([]);
 
   // We need a ref to track if it's the very first load to avoid double resets in strict mode
   const initialized = useRef(false);
@@ -174,7 +177,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col p-4 md:p-8 max-w-7xl mx-auto gap-6 no-select">
+    <>
+      <div className="min-h-screen flex flex-col p-4 md:p-8 max-w-7xl mx-auto gap-6 no-select no-print">
       
       {/* Header */}
       <header className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border-b-4 border-indigo-50">
@@ -187,13 +191,23 @@ export default function App() {
           </h1>
           <p className="text-gray-500 font-medium hidden sm:block">Træk tingene ned i kasserne for at lave en sortering!</p>
         </div>
-        <button 
-          onClick={() => resetGame(true)}
-          className="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition-colors border-2 border-indigo-200"
-        >
-          <RefreshCcw size={20} />
-          <span className="hidden sm:inline">Nyt Spil</span>
-        </button>
+        <div className="flex gap-2">
+          <button 
+            onClick={() => setIsWorksheetOpen(true)}
+            className="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition-colors border-2 border-indigo-100"
+            title="Åbn opgaveark for udskrivning"
+          >
+            <Printer size={20} />
+            <span className="hidden sm:inline">Opgaveark</span>
+          </button>
+          <button 
+            onClick={() => resetGame(true)}
+            className="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition-colors border-2 border-indigo-200"
+          >
+            <RefreshCcw size={20} />
+            <span className="hidden sm:inline">Nyt Spil</span>
+          </button>
+        </div>
       </header>
 
       {/* Spotlight Tutorial Overlay Backdrop */}
@@ -371,7 +385,35 @@ export default function App() {
            <LiveChart data={buckets} />
         </div>
 
+        </div>
+
       </div>
-    </div>
+      
+      {isWorksheetOpen && (
+        <WorksheetPreview 
+          initialThemeIndex={currentThemeIndex}
+          onClose={() => setIsWorksheetOpen(false)}
+          onStateChange={(pages) => {
+            setBookletPages(pages);
+          }}
+        />
+      )}
+
+      {/* Root level print-only sheet (completely hidden on screen) */}
+      <div className="print-only">
+        {bookletPages.map((page) => (
+          <div key={page.id} className="print-page w-[210mm] min-h-[297mm] p-[15mm] box-border bg-white mx-auto">
+            {page.type === 'frontpage' ? (
+              <BookletFrontPage themeIndices={page.themeIndices || []} />
+            ) : (
+              <WorksheetPrintPage 
+                theme={THEMES[page.themeIndex!]} 
+                items={page.items!} 
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
