@@ -55,25 +55,24 @@ const generateBalancedCounts = (numCategories: number, total: number, min: numbe
 };
 
 // --- BRANDING LOGO COMPONENT ---
-export const KongSkoleLogo: React.FC<{ size?: 'sm' | 'md' | 'lg' }> = ({ size = 'md' }) => {
+export const DataOgSorteringLogo: React.FC<{ size?: 'sm' | 'md' | 'lg' }> = ({ size = 'md' }) => {
   const isSm = size === 'sm';
   return (
     <div className="flex items-center gap-2.5 select-none text-left">
       <div className={`rounded-xl bg-gradient-to-br from-[#29619F] to-[#1a4472] text-white flex items-center justify-center shadow-sm shrink-0 ${isSm ? 'w-8 h-8' : 'w-9 h-9'}`}>
         <svg width={isSm ? "20" : "24"} height={isSm ? "20" : "24"} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 17L2 7.5L7.5 11L12 4.5L16.5 11L22 7.5L20 17H4Z" fill="#FBBF24" stroke="#F59E0B" strokeWidth="1.5" strokeLinejoin="round"/>
-          <path d="M4 18C4 18.5523 4.44772 19 5 19H19C19.5523 19 20 18.5523 20 18V17H4V18Z" fill="#F59E0B"/>
-          <circle cx="12" cy="4" r="1.5" fill="#FBBF24"/>
-          <circle cx="2" cy="7" r="1.5" fill="#FBBF24"/>
-          <circle cx="22" cy="7" r="1.5" fill="#FBBF24"/>
+          <rect x="3" y="13" width="4" height="8" rx="1" fill="#60A5FA" />
+          <rect x="10" y="8" width="4" height="13" rx="1" fill="#FBBF24" />
+          <rect x="17" y="4" width="4" height="17" rx="1" fill="#34D399" />
+          <path d="M2 21H22" stroke="white" strokeWidth="2" strokeLinecap="round"/>
         </svg>
       </div>
       <div className="flex flex-col">
         <span className={`font-['Fredoka',sans-serif] font-bold text-gray-900 leading-tight tracking-tight ${isSm ? 'text-base' : 'text-lg'}`}>
-          KongSkole.dk
+          Data og sortering
         </span>
         <span className="font-['Lato',sans-serif] font-bold text-[10px] text-[#29619F] tracking-wider uppercase leading-none">
-          Matematik & Data
+          Matematikopgaver
         </span>
       </div>
     </div>
@@ -400,7 +399,7 @@ export const BookletFrontPage: React.FC<BookletFrontPageProps> = ({ themeIndices
       
       {/* Top Header */}
       <div className="w-full flex justify-between items-center pb-4 border-b-2 border-black shrink-0">
-        <KongSkoleLogo size="md" />
+        <DataOgSorteringLogo size="md" />
         <span className="bg-blue-50 text-[#29619F] border border-blue-200 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider font-['Lato',sans-serif]">
           Matematik i Indskolingen
         </span>
@@ -459,8 +458,8 @@ export const BookletFrontPage: React.FC<BookletFrontPageProps> = ({ themeIndices
 
       {/* Solid 2px Black Footer */}
       <div className="w-full border-t-2 border-black pt-3 flex justify-between items-center text-[13px] font-bold text-black font-['Lato',sans-serif] shrink-0">
-        <span>KongSkole.dk</span>
-        <span>Elevmateriale ©</span>
+        <span>© Kongskole.dk</span>
+        <span>Side {pageNumber} af {totalPages}</span>
       </div>
 
     </div>
@@ -491,8 +490,8 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
       
       {/* 1. Arkets Header */}
       <div className="w-full flex justify-between items-center pb-3 border-b-2 border-black mb-3 shrink-0">
-        {/* Venstre side: Appens logo og KongSkole.dk badge */}
-        <KongSkoleLogo size="md" />
+        {/* Venstre side: Logo for Data og sortering */}
+        <DataOgSorteringLogo size="md" />
 
         {/* Højre side: Hvad skal jeg gøre? + Instruktion */}
         <div className="text-right">
@@ -653,8 +652,8 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
 
       {/* 3. Arkets Footer: Solid 2px sort skillelinje */}
       <div className="w-full border-t-2 border-black pt-3 flex justify-between items-center text-[13px] font-bold text-black font-['Lato',sans-serif] shrink-0">
+        <span>© Kongskole.dk</span>
         <span>Side {pageNumber} af {totalPages}</span>
-        <span>Dataindsamling og sortering © KongSkole.dk</span>
       </div>
 
     </div>

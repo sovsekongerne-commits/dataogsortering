@@ -155,13 +155,28 @@ export default function App() {
 
   const totalSorted = buckets.reduce((acc, b) => acc + b.count, 0);
 
-  const nextTutorialStep = () => {
+  const nextTutorialStep = useCallback(() => {
     if (tutorialStep >= 3) {
       setTutorialStep(0);
     } else {
       setTutorialStep(s => s + 1);
     }
-  };
+  }, [tutorialStep]);
+
+  // Keyboard navigation for tutorial
+  useEffect(() => {
+    if (tutorialStep <= 0) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't intercept if modifier keys like Ctrl/Cmd are pressed
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      e.preventDefault();
+      nextTutorialStep();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [tutorialStep, nextTutorialStep]);
 
   const handleQuizAnswer = (option: string) => {
     if (quizFeedback) return; // Prevent multiple clicks
