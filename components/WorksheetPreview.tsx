@@ -350,11 +350,11 @@ export const WorksheetPreview: React.FC<WorksheetPreviewProps> = ({ onClose, ini
 
         {/* Scaled container for A4 pages */}
         <div 
-          className="flex flex-col items-center gap-8 transition-transform duration-200 origin-top"
+          className="worksheet-pages-zoom-wrapper flex flex-col items-center gap-8 transition-transform duration-200 origin-top"
           style={{ transform: `scale(${zoomLevel})`, transformOrigin: 'top center' }}
         >
           {pages.map((page, index) => (
-            <div key={page.id} className="relative">
+            <div key={page.id} className="worksheet-page-wrapper relative">
               
               {/* Page indicator on screen */}
               <div className="absolute -left-20 top-4 bg-[#29619F] text-white font-bold rounded-lg px-2.5 py-1 text-xs shadow-md border border-blue-600 z-10 hidden lg:block no-print">
