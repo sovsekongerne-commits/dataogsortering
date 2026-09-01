@@ -1,0 +1,772 @@
+{
+  "specVersion": "1.0",
+  "app": {
+    "id": "dataogsortering",
+    "name": "Data & Sortering",
+    "tagline": "Tæl, sorter og aflæs data",
+    "domain": "dataogsortering.kongskole.dk",
+    "logo": {
+      "primaryText": "Data &",
+      "secondaryText": "Sortering",
+      "badgeColor": "#5893D4"
+    },
+    "taskTypes": [
+      {
+        "id": "count-and-sort",
+        "name": "Tæl og sorter",
+        "description": "Tæl de forskellige ting og udfyld oversigten.",
+        "instruction": "Tæl hvor mange der er af hver slags, og skriv tallet i boksen.",
+        "category": "matematik",
+        "layout": "write-in",
+        "supportedDifficulties": [
+          "easy"
+        ],
+        "hasPhoneticFilter": false,
+        "sampleLeft": {
+          "type": "image",
+          "content": "https://dataogsortering.kongskole.dk/data/opgave_frugter_sample.svg"
+        },
+        "sampleRight": {
+          "type": "text",
+          "content": "Facit"
+        }
+      },
+      {
+        "id": "category-sorting",
+        "name": "Sortering",
+        "description": "Forbind eller sorter elementerne til den rigtige gruppe.",
+        "instruction": "Hvilken gruppe hører tingen til? Forbind med en streg.",
+        "category": "matematik",
+        "layout": "category-sorting",
+        "supportedDifficulties": [
+          "easy"
+        ],
+        "hasPhoneticFilter": false,
+        "sampleLeft": {
+          "type": "image",
+          "content": "https://dataogsortering.kongskole.dk/data/kategori_sample.svg"
+        },
+        "sampleRight": {
+          "type": "text",
+          "content": "Gruppe"
+        }
+      }
+    ]
+  },
+  "items": [
+    {
+      "id": "ds-classic-1",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/aeble.svg",
+        "label": "Æble"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_frugter.svg",
+        "label": "Ting & Sager"
+      },
+      "matchId": "cat-classic",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "ting"
+      ]
+    },
+    {
+      "id": "ds-classic-2",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/bold.svg",
+        "label": "Bold"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_frugter.svg",
+        "label": "Ting & Sager"
+      },
+      "matchId": "cat-classic",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "ting"
+      ]
+    },
+    {
+      "id": "ds-classic-3",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/stjerne.svg",
+        "label": "Stjerne"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_frugter.svg",
+        "label": "Ting & Sager"
+      },
+      "matchId": "cat-classic",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "ting"
+      ]
+    },
+    {
+      "id": "ds-classic-4",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/terning.svg",
+        "label": "Terning"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_frugter.svg",
+        "label": "Ting & Sager"
+      },
+      "matchId": "cat-classic",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "ting"
+      ]
+    },
+    {
+      "id": "ds-animal-1",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kat.svg",
+        "label": "Kat"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_dyr.svg",
+        "label": "Dyrevenner"
+      },
+      "matchId": "cat-animals",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "dyr"
+      ]
+    },
+    {
+      "id": "ds-animal-2",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/hund.svg",
+        "label": "Hund"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_dyr.svg",
+        "label": "Dyrevenner"
+      },
+      "matchId": "cat-animals",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "dyr"
+      ]
+    },
+    {
+      "id": "ds-animal-3",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/fisk.svg",
+        "label": "Fisk"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_dyr.svg",
+        "label": "Dyrevenner"
+      },
+      "matchId": "cat-animals",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "dyr"
+      ]
+    },
+    {
+      "id": "ds-animal-4",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/fugl.svg",
+        "label": "Fugl"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_dyr.svg",
+        "label": "Dyrevenner"
+      },
+      "matchId": "cat-animals",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "dyr"
+      ]
+    },
+    {
+      "id": "ds-summer-1",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/sol.svg",
+        "label": "Sol"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_sommer.svg",
+        "label": "Sommer"
+      },
+      "matchId": "cat-summer",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "sommer"
+      ]
+    },
+    {
+      "id": "ds-summer-2",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/blomst.svg",
+        "label": "Blomst"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_sommer.svg",
+        "label": "Sommer"
+      },
+      "matchId": "cat-summer",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "sommer"
+      ]
+    },
+    {
+      "id": "ds-summer-3",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/trae.svg",
+        "label": "Træ"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_sommer.svg",
+        "label": "Sommer"
+      },
+      "matchId": "cat-summer",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "sommer"
+      ]
+    },
+    {
+      "id": "ds-summer-4",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/is.svg",
+        "label": "Is"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_sommer.svg",
+        "label": "Sommer"
+      },
+      "matchId": "cat-summer",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "sommer"
+      ]
+    },
+    {
+      "id": "ds-vehicle-1",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/bil.svg",
+        "label": "Bil"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_koeretoejer.svg",
+        "label": "Køretøjer"
+      },
+      "matchId": "cat-vehicles",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "koeretoejer"
+      ]
+    },
+    {
+      "id": "ds-vehicle-2",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/baad.svg",
+        "label": "Båd"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_koeretoejer.svg",
+        "label": "Køretøjer"
+      },
+      "matchId": "cat-vehicles",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "koeretoejer"
+      ]
+    },
+    {
+      "id": "ds-vehicle-3",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/flyver.svg",
+        "label": "Flyver"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_koeretoejer.svg",
+        "label": "Køretøjer"
+      },
+      "matchId": "cat-vehicles",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "koeretoejer"
+      ]
+    },
+    {
+      "id": "ds-vehicle-4",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/tog.svg",
+        "label": "Tog"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_koeretoejer.svg",
+        "label": "Køretøjer"
+      },
+      "matchId": "cat-vehicles",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "koeretoejer"
+      ]
+    },
+    {
+      "id": "ds-space-1",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/raket.svg",
+        "label": "Raket"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_rummet.svg",
+        "label": "Rummet"
+      },
+      "matchId": "cat-space",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "rummet"
+      ]
+    },
+    {
+      "id": "ds-space-2",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/planet.svg",
+        "label": "Planet"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_rummet.svg",
+        "label": "Rummet"
+      },
+      "matchId": "cat-space",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "rummet"
+      ]
+    },
+    {
+      "id": "ds-space-3",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/maane.svg",
+        "label": "Måne"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_rummet.svg",
+        "label": "Rummet"
+      },
+      "matchId": "cat-space",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "rummet"
+      ]
+    },
+    {
+      "id": "ds-space-4",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/ufo.svg",
+        "label": "UFO"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_rummet.svg",
+        "label": "Rummet"
+      },
+      "matchId": "cat-space",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "rummet"
+      ]
+    },
+    {
+      "id": "ds-food-1",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/pizza.svg",
+        "label": "Pizza"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_mad.svg",
+        "label": "Mad"
+      },
+      "matchId": "cat-food",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "mad"
+      ]
+    },
+    {
+      "id": "ds-food-2",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/burger.svg",
+        "label": "Burger"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_mad.svg",
+        "label": "Mad"
+      },
+      "matchId": "cat-food",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "mad"
+      ]
+    },
+    {
+      "id": "ds-food-3",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/donut.svg",
+        "label": "Donut"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_mad.svg",
+        "label": "Mad"
+      },
+      "matchId": "cat-food",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "mad"
+      ]
+    },
+    {
+      "id": "ds-food-4",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/pomfritter.svg",
+        "label": "Pomfritter"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_mad.svg",
+        "label": "Mad"
+      },
+      "matchId": "cat-food",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "mad"
+      ]
+    },
+    {
+      "id": "ds-sport-1",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/fodbold.svg",
+        "label": "Fodbold"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_sport.svg",
+        "label": "Sport"
+      },
+      "matchId": "cat-sports",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "sport"
+      ]
+    },
+    {
+      "id": "ds-sport-2",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/basketball.svg",
+        "label": "Basketball"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_sport.svg",
+        "label": "Sport"
+      },
+      "matchId": "cat-sports",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "sport"
+      ]
+    },
+    {
+      "id": "ds-sport-3",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/tennisbold.svg",
+        "label": "Tennisbold"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_sport.svg",
+        "label": "Sport"
+      },
+      "matchId": "cat-sports",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "sport"
+      ]
+    },
+    {
+      "id": "ds-sport-4",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/baseball.svg",
+        "label": "Baseball"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_sport.svg",
+        "label": "Sport"
+      },
+      "matchId": "cat-sports",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "sport"
+      ]
+    },
+    {
+      "id": "ds-school-1",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/bog.svg",
+        "label": "Bog"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_skole.svg",
+        "label": "Skole"
+      },
+      "matchId": "cat-school",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "skole"
+      ]
+    },
+    {
+      "id": "ds-school-2",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/blyant.svg",
+        "label": "Blyant"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_skole.svg",
+        "label": "Skole"
+      },
+      "matchId": "cat-school",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "skole"
+      ]
+    },
+    {
+      "id": "ds-school-3",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/skoletaske.svg",
+        "label": "Skoletaske"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_skole.svg",
+        "label": "Skole"
+      },
+      "matchId": "cat-school",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "skole"
+      ]
+    },
+    {
+      "id": "ds-school-4",
+      "taskTypeId": "category-sorting",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/lineal.svg",
+        "label": "Lineal"
+      },
+      "right": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kasse_skole.svg",
+        "label": "Skole"
+      },
+      "matchId": "cat-school",
+      "tags": [
+        "matematik",
+        "kategorier",
+        "skole"
+      ]
+    },
+    {
+      "id": "ds-count-classic",
+      "taskTypeId": "count-and-sort",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/opgave_frugter_sample.svg",
+        "label": "Tællebillede med ting & sager"
+      },
+      "right": {
+        "type": "text",
+        "content": "Ting & Sager"
+      },
+      "matchId": "count-classic",
+      "tags": [
+        "matematik",
+        "data",
+        "sortering",
+        "taelling"
+      ]
+    },
+    {
+      "id": "ds-count-animals",
+      "taskTypeId": "count-and-sort",
+      "difficulty": 1,
+      "left": {
+        "type": "image",
+        "content": "https://dataogsortering.kongskole.dk/data/kategori_sample.svg",
+        "label": "Tællebillede med dyrevenner"
+      },
+      "right": {
+        "type": "text",
+        "content": "Dyrevenner"
+      },
+      "matchId": "count-animals",
+      "tags": [
+        "matematik",
+        "data",
+        "sortering",
+        "taelling"
+      ]
+    }
+  ]
+}
