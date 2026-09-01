@@ -399,39 +399,39 @@ export const BookletFrontPage: React.FC<BookletFrontPageProps> = ({ themeIndices
     <div className="forside-page a4-page bg-white border border-slate-300 shadow-2xl rounded-sm w-[210mm] min-h-[297mm] h-[297mm] max-h-[297mm] p-[15mm] box-border relative flex flex-col justify-between text-slate-800 font-['Lato',sans-serif]">
       
       {/* Top Header */}
-      <div className="w-full flex justify-between items-center pb-4 border-b-2 border-black">
+      <div className="w-full flex justify-between items-center pb-4 border-b-2 border-black shrink-0">
         <KongSkoleLogo size="md" />
-        <span className="bg-blue-50 text-[#29619F] border border-blue-200 px-3.5 py-1 rounded-full font-bold text-xs uppercase tracking-wider font-['Lato',sans-serif]">
+        <span className="bg-blue-50 text-[#29619F] border border-blue-200 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider font-['Lato',sans-serif]">
           Matematik i Indskolingen
         </span>
       </div>
 
       {/* Main Center Content */}
-      <div className="w-full flex flex-col items-center my-auto">
+      <div className="w-full flex flex-col items-center justify-center flex-grow py-4">
         
         {/* Title */}
-        <h1 className="text-4xl font-bold text-gray-900 tracking-tight text-center leading-tight mb-2 font-['Fredoka',sans-serif]">
+        <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight text-center leading-tight mb-2.5 font-['Fredoka',sans-serif]">
           Mit store Sorteringshæfte
         </h1>
         
-        <p className="text-sm font-medium text-gray-600 text-center max-w-md mb-8 font-['Lato',sans-serif]">
-          Et sjovt opgavehæfte med tælleopgaver, kategorier og søjlediagrammer.
+        <p className="text-base font-medium text-gray-600 text-center max-w-lg mb-8 font-['Lato',sans-serif]">
+          Et sjovt og lærerigt opgavehæfte med tælleopgaver, kategorisering og søjlediagrammer.
         </p>
 
         {/* Large coloring area in center */}
-        <div className="w-full max-w-md aspect-[16/10] border-3 border-dashed border-gray-300 rounded-3xl p-6 flex flex-col justify-center items-center bg-gray-50/50 relative mb-8">
-          <div className="absolute -top-3 bg-white px-3 text-[11px] font-bold text-gray-500 uppercase tracking-wider font-['Lato',sans-serif]">
+        <div className="w-full max-w-lg min-h-[220px] border-3 border-dashed border-gray-300 rounded-3xl p-6 flex flex-col justify-center items-center bg-gray-50/60 relative mb-8">
+          <div className="absolute -top-3.5 bg-white px-4 py-0.5 text-xs font-bold text-gray-600 uppercase tracking-wider font-['Lato',sans-serif] rounded-full border border-gray-200">
             🎨 Farvelæg forsiden!
           </div>
           
-          <div className="flex flex-wrap gap-5 justify-center items-center max-h-[140px] overflow-hidden p-2">
-            {themeIndices.map((themeIdx) => {
+          <div className="flex flex-wrap gap-5 justify-center items-center p-2">
+            {themeIndices.slice(0, 4).map((themeIdx) => {
               const theme = THEMES[themeIdx];
-              return theme.buckets.slice(0, 2).map((bucket, bIdx) => {
+              return theme.buckets.map((bucket, bIdx) => {
                 const Icon = bucket.icon;
                 return (
-                  <div key={`${theme.id}-${bIdx}`} className="p-3 border-2 border-gray-200 rounded-2xl bg-white shadow-sm">
-                    <Icon size={36} />
+                  <div key={`${theme.id}-${bIdx}`} className="p-3 border-2 border-gray-200 rounded-2xl bg-white shadow-xs hover:scale-105 transition-transform">
+                    <Icon size={38} />
                   </div>
                 );
               });
@@ -440,17 +440,17 @@ export const BookletFrontPage: React.FC<BookletFrontPageProps> = ({ themeIndices
         </div>
 
         {/* Name and class fields */}
-        <div className="w-full max-w-sm bg-gray-50 border border-gray-200 rounded-2xl p-5 flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <span className="font-bold text-gray-700 text-xs w-14 font-['Lato',sans-serif]">Navn:</span>
+        <div className="w-full max-w-md bg-gray-50 border-2 border-gray-200 rounded-2xl p-6 flex flex-col gap-5 shadow-xs">
+          <div className="flex items-center gap-4">
+            <span className="font-bold text-gray-700 text-sm w-16 font-['Lato',sans-serif]">Navn:</span>
             <div className="flex-grow border-b-2 border-dotted border-gray-400 h-5"></div>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="font-bold text-gray-700 text-xs w-14 font-['Lato',sans-serif]">Klasse:</span>
+          <div className="flex items-center gap-4">
+            <span className="font-bold text-gray-700 text-sm w-16 font-['Lato',sans-serif]">Klasse:</span>
             <div className="flex-grow border-b-2 border-dotted border-gray-400 h-5"></div>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="font-bold text-gray-700 text-xs w-14 font-['Lato',sans-serif]">Dato:</span>
+          <div className="flex items-center gap-4">
+            <span className="font-bold text-gray-700 text-sm w-16 font-['Lato',sans-serif]">Dato:</span>
             <div className="flex-grow border-b-2 border-dotted border-gray-400 h-5"></div>
           </div>
         </div>
@@ -458,7 +458,7 @@ export const BookletFrontPage: React.FC<BookletFrontPageProps> = ({ themeIndices
       </div>
 
       {/* Solid 2px Black Footer */}
-      <div className="w-full border-t-2 border-black pt-3 flex justify-between items-center text-[13px] font-bold text-black font-['Lato',sans-serif]">
+      <div className="w-full border-t-2 border-black pt-3 flex justify-between items-center text-[13px] font-bold text-black font-['Lato',sans-serif] shrink-0">
         <span>KongSkole.dk</span>
         <span>Elevmateriale ©</span>
       </div>
@@ -483,6 +483,9 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
 }) => {
   const rows = Array.from({ length: 10 }, (_, i) => 10 - i);
 
+  // Determine if this page asks for 'flest' or 'færrest'
+  const isMostQuestion = pageNumber % 2 === 1;
+
   return (
     <div className="a4-page bg-white border border-slate-300 shadow-2xl rounded-sm w-[210mm] min-h-[297mm] h-[297mm] max-h-[297mm] p-[15mm] box-border relative flex flex-col justify-between text-slate-800 font-['Lato',sans-serif]">
       
@@ -503,31 +506,31 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
       </div>
 
       {/* 2. Opgaveindhold (Mix box + Count boxes and Grid side-by-side) */}
-      <div className="grid grid-cols-12 gap-6 items-stretch flex-grow my-auto">
+      <div className="grid grid-cols-12 gap-5 items-stretch flex-grow my-auto">
         
         {/* LEFT COLUMN: Mix box + Count boxes moved up */}
-        <div className="col-span-7 flex flex-col justify-start gap-4">
+        <div className="col-span-7 flex flex-col justify-between">
           
           {/* Mix Box with spacious distributed items */}
           <div className="flex flex-col">
-            <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 font-['Lato',sans-serif]">
+            <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5 font-['Lato',sans-serif]">
               Blandingskassen (Tæl tingene)
             </h3>
-            <div className="border-3 border-dashed border-gray-300 rounded-2xl p-5 bg-gray-50/80 min-h-[340px] flex flex-col justify-center items-center">
+            <div className="border-3 border-dashed border-gray-300 rounded-2xl p-5 bg-gray-50/80 min-h-[380px] flex flex-col justify-center items-center shadow-xs">
               
               {/* 5x4 Grid layout for clean spacious item placement */}
-              <div className="grid grid-cols-5 gap-4 w-full h-full content-center items-center justify-items-center">
+              <div className="grid grid-cols-5 gap-4.5 w-full h-full content-center items-center justify-items-center">
                 {items.map((item) => {
                   const Icon = item.icon;
                   return (
                     <div 
                       key={item.id} 
-                      className="bg-white border-2 border-gray-200 rounded-full p-2 flex items-center justify-center w-12 h-12 shadow-xs"
+                      className="bg-white border-2 border-gray-200 rounded-full p-2 flex items-center justify-center w-[50px] h-[50px] shadow-xs"
                       style={{
                         transform: `rotate(${item.rotation}deg) translate(${item.offsetX}px, ${item.offsetY}px)`
                       }}
                     >
-                      <Icon size={30} />
+                      <Icon size={32} />
                     </div>
                   );
                 })}
@@ -537,20 +540,20 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
           </div>
 
           {/* Count Boxes - moved up directly under mix box */}
-          <div className="flex flex-col">
-            <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 font-['Lato',sans-serif]">
+          <div className="flex flex-col mt-3">
+            <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5 font-['Lato',sans-serif]">
               Skriv antal
             </h3>
             <div className="grid grid-cols-4 gap-2.5">
               {theme.buckets.map((bucket) => {
                 const Icon = bucket.icon;
                 return (
-                  <div key={bucket.type} className="border-2 border-gray-200 rounded-xl p-2 flex flex-col items-center bg-white shadow-xs">
-                    <Icon size={26} />
+                  <div key={bucket.type} className="border-2 border-gray-200 rounded-xl p-2.5 flex flex-col items-center bg-white shadow-xs">
+                    <Icon size={28} />
                     <span className="text-[11px] font-bold text-gray-700 mt-1 truncate w-full text-center font-['Lato',sans-serif]">
                       {bucket.label}
                     </span>
-                    <div className="w-10 h-10 rounded-full border-2 border-dashed border-gray-400 mt-1.5 flex items-center justify-center bg-gray-50 text-sm font-bold text-gray-400">
+                    <div className="w-11 h-11 rounded-full border-2 border-dashed border-gray-400 mt-1.5 flex items-center justify-center bg-gray-50 text-sm font-bold text-gray-400">
                       {/* Empty circle for student count */}
                     </div>
                   </div>
@@ -561,10 +564,12 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
 
         </div>
 
-        {/* RIGHT COLUMN: Stacked Bar Chart - Taller and centered in its column */}
-        <div className="col-span-5 flex flex-col items-center justify-center border-l-2 border-gray-200 pl-4 h-full">
-          <div className="w-full flex flex-col items-center justify-center py-2">
-            <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3.5 w-full text-center font-['Lato',sans-serif]">
+        {/* RIGHT COLUMN: Stacked Bar Chart + Spørgsmål til dataen */}
+        <div className="col-span-5 flex flex-col justify-between border-l-2 border-gray-200 pl-5 h-full">
+          
+          {/* Top: Tegn diagrammet */}
+          <div className="w-full flex flex-col items-center">
+            <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2.5 w-full text-center font-['Lato',sans-serif]">
               Tegn diagrammet
             </h3>
             
@@ -578,7 +583,7 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
                   {theme.buckets.map((bucket, idx) => (
                     <div
                       key={bucket.type}
-                      className={`w-11 h-[27px] border-b border-r border-gray-400 bg-white
+                      className={`w-12 h-[26px] border-b border-r border-gray-400 bg-white
                         ${rowNum === 10 ? 'border-t' : ''}
                         ${idx === 0 ? 'border-l' : ''}
                       `}
@@ -588,11 +593,11 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
               ))}
               
               {/* X Axis Icons */}
-              <div className="flex items-center justify-center mt-3 pl-6 w-full">
+              <div className="flex items-center justify-center mt-2.5 pl-6 w-full">
                 {theme.buckets.map((bucket) => {
                   const Icon = bucket.icon;
                   return (
-                    <div key={bucket.type} className="w-11 flex flex-col items-center">
+                    <div key={bucket.type} className="w-12 flex flex-col items-center">
                       <Icon size={24} />
                       <span className="text-[10px] font-bold text-gray-800 mt-1 truncate w-full text-center font-['Lato',sans-serif]">
                         {bucket.label}
@@ -604,6 +609,44 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
             </div>
 
           </div>
+
+          {/* Bottom: Spørgsmål til dataen (ud fra spillet) */}
+          <div className="w-full mt-3 border-2 border-gray-300 rounded-2xl p-3.5 bg-gray-50/80 flex flex-col gap-2.5 shadow-xs">
+            <div className="flex items-center gap-1.5 text-[11px] font-bold text-gray-800 uppercase tracking-wider font-['Lato',sans-serif]">
+              <span>❓ Svar på spørgsmålene</span>
+            </div>
+            
+            <div className="flex flex-col gap-2.5 text-xs text-gray-800">
+              {/* Spørgsmål 1: Flest / Færrest */}
+              <div className="flex flex-col gap-1.5">
+                <span className="font-bold text-[11px]">
+                  {isMostQuestion ? '1. Hvilken ting er der flest af?' : '1. Hvilken ting er der færrest af?'}
+                </span>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {theme.buckets.map((b) => {
+                    const Icon = b.icon;
+                    return (
+                      <div key={b.type} className="flex items-center gap-1.5 bg-white border border-gray-300 rounded-lg px-2 py-1 shadow-2xs">
+                        <div className="w-3.5 h-3.5 rounded-sm border-2 border-gray-400 shrink-0"></div>
+                        <Icon size={16} />
+                        <span className="text-[10px] font-bold text-gray-700 truncate">{b.label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Spørgsmål 2: I alt */}
+              <div className="flex items-center justify-between pt-1.5 border-t border-gray-200">
+                <span className="font-bold text-[11px]">2. Hvor mange ting er der i alt?</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-10 h-7 rounded-lg border-2 border-dashed border-gray-400 bg-white flex items-center justify-center font-bold text-xs"></div>
+                  <span className="text-[11px] font-bold text-gray-600">stk.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
