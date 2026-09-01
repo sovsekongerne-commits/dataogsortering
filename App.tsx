@@ -7,7 +7,7 @@ import { LiveChart } from './components/LiveChart';
 import { generateQuizQuestion } from './services/geminiService';
 import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette, ArrowRight, Play, ArrowUp, ArrowDown, Printer } from 'lucide-react';
 import { gemMedalje, gemPoint, SPIL_NAVN } from './utils/cookieHelpers';
-import { WorksheetPreview, WorksheetPrintPage, WorksheetItem, BookletPage, BookletFrontPage } from './components/WorksheetPreview';
+import { WorksheetPreview } from './components/WorksheetPreview';
 
 export default function App() {
   const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
@@ -24,7 +24,6 @@ export default function App() {
   const [mistakes, setMistakes] = useState(0);
   const [tutorialStep, setTutorialStep] = useState(1);
   const [isWorksheetOpen, setIsWorksheetOpen] = useState(false);
-  const [bookletPages, setBookletPages] = useState<BookletPage[]>([]);
 
   // We need a ref to track if it's the very first load to avoid double resets in strict mode
   const initialized = useRef(false);
@@ -393,27 +392,8 @@ export default function App() {
         <WorksheetPreview 
           initialThemeIndex={currentThemeIndex}
           onClose={() => setIsWorksheetOpen(false)}
-          onStateChange={(pages) => {
-            setBookletPages(pages);
-          }}
         />
       )}
-
-      {/* Root level print-only sheet (completely hidden on screen) */}
-      <div className="print-only">
-        {bookletPages.map((page) => (
-          <div key={page.id} className="print-page w-[210mm] min-h-[297mm] p-[15mm] box-border bg-white mx-auto">
-            {page.type === 'frontpage' ? (
-              <BookletFrontPage themeIndices={page.themeIndices || []} />
-            ) : (
-              <WorksheetPrintPage 
-                theme={THEMES[page.themeIndex!]} 
-                items={page.items!} 
-              />
-            )}
-          </div>
-        ))}
-      </div>
     </>
   );
 }
