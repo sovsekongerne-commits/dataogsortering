@@ -487,7 +487,7 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
     <div className="a4-page bg-white border border-slate-300 shadow-2xl rounded-sm w-[210mm] min-h-[297mm] h-[297mm] max-h-[297mm] p-[15mm] box-border relative flex flex-col justify-between text-slate-800 font-['Lato',sans-serif]">
       
       {/* 1. Arkets Header */}
-      <div className="w-full flex justify-between items-center pb-3 border-b-2 border-black mb-4">
+      <div className="w-full flex justify-between items-center pb-3 border-b-2 border-black mb-3 shrink-0">
         {/* Venstre side: Appens logo og KongSkole.dk badge */}
         <KongSkoleLogo size="md" />
 
@@ -505,29 +505,29 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
       {/* 2. Opgaveindhold (Mix box + Count boxes and Grid side-by-side) */}
       <div className="grid grid-cols-12 gap-6 items-stretch flex-grow my-auto">
         
-        {/* LEFT COLUMN: Mix box + Count boxes */}
-        <div className="col-span-7 flex flex-col justify-between gap-4">
+        {/* LEFT COLUMN: Mix box + Count boxes moved up */}
+        <div className="col-span-7 flex flex-col justify-start gap-4">
           
-          {/* Mix Box */}
-          <div>
+          {/* Mix Box with spacious distributed items */}
+          <div className="flex flex-col">
             <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 font-['Lato',sans-serif]">
               Blandingskassen (Tæl tingene)
             </h3>
-            <div className="border-3 border-dashed border-gray-300 rounded-2xl p-4 bg-gray-50 aspect-[5/4] flex flex-col justify-center items-center">
+            <div className="border-3 border-dashed border-gray-300 rounded-2xl p-5 bg-gray-50/80 min-h-[340px] flex flex-col justify-center items-center">
               
-              {/* 5x4 Grid layout for clean printable item placement */}
-              <div className="grid grid-cols-5 gap-3.5 w-full h-full content-center items-center justify-items-center">
+              {/* 5x4 Grid layout for clean spacious item placement */}
+              <div className="grid grid-cols-5 gap-4 w-full h-full content-center items-center justify-items-center">
                 {items.map((item) => {
                   const Icon = item.icon;
                   return (
                     <div 
                       key={item.id} 
-                      className="bg-white border-2 border-gray-200 rounded-full p-1.5 flex items-center justify-center w-11 h-11 shadow-xs"
+                      className="bg-white border-2 border-gray-200 rounded-full p-2 flex items-center justify-center w-12 h-12 shadow-xs"
                       style={{
                         transform: `rotate(${item.rotation}deg) translate(${item.offsetX}px, ${item.offsetY}px)`
                       }}
                     >
-                      <Icon size={28} />
+                      <Icon size={30} />
                     </div>
                   );
                 })}
@@ -536,21 +536,21 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
             </div>
           </div>
 
-          {/* Count Boxes */}
-          <div>
+          {/* Count Boxes - moved up directly under mix box */}
+          <div className="flex flex-col">
             <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 font-['Lato',sans-serif]">
               Skriv antal
             </h3>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-2.5">
               {theme.buckets.map((bucket) => {
                 const Icon = bucket.icon;
                 return (
                   <div key={bucket.type} className="border-2 border-gray-200 rounded-xl p-2 flex flex-col items-center bg-white shadow-xs">
-                    <Icon size={24} />
-                    <span className="text-[10px] font-bold text-gray-700 mt-1 truncate w-full text-center font-['Lato',sans-serif]">
+                    <Icon size={26} />
+                    <span className="text-[11px] font-bold text-gray-700 mt-1 truncate w-full text-center font-['Lato',sans-serif]">
                       {bucket.label}
                     </span>
-                    <div className="w-9 h-9 rounded-full border-2 border-dashed border-gray-400 mt-2 flex items-center justify-center bg-gray-50">
+                    <div className="w-10 h-10 rounded-full border-2 border-dashed border-gray-400 mt-1.5 flex items-center justify-center bg-gray-50 text-sm font-bold text-gray-400">
                       {/* Empty circle for student count */}
                     </div>
                   </div>
@@ -561,10 +561,10 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
 
         </div>
 
-        {/* RIGHT COLUMN: Stacked Bar Chart */}
-        <div className="col-span-5 flex flex-col items-center justify-between border-l-2 border-gray-200 pl-4">
-          <div className="w-full flex flex-col items-center">
-            <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3 w-full text-center font-['Lato',sans-serif]">
+        {/* RIGHT COLUMN: Stacked Bar Chart - Taller and centered in its column */}
+        <div className="col-span-5 flex flex-col items-center justify-center border-l-2 border-gray-200 pl-4 h-full">
+          <div className="w-full flex flex-col items-center justify-center py-2">
+            <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3.5 w-full text-center font-['Lato',sans-serif]">
               Tegn diagrammet
             </h3>
             
@@ -578,7 +578,7 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
                   {theme.buckets.map((bucket, idx) => (
                     <div
                       key={bucket.type}
-                      className={`w-10 h-[24px] border-b border-r border-gray-400 bg-white
+                      className={`w-11 h-[27px] border-b border-r border-gray-400 bg-white
                         ${rowNum === 10 ? 'border-t' : ''}
                         ${idx === 0 ? 'border-l' : ''}
                       `}
@@ -588,13 +588,13 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
               ))}
               
               {/* X Axis Icons */}
-              <div className="flex items-center justify-center mt-2.5 pl-6 w-full">
+              <div className="flex items-center justify-center mt-3 pl-6 w-full">
                 {theme.buckets.map((bucket) => {
                   const Icon = bucket.icon;
                   return (
-                    <div key={bucket.type} className="w-10 flex flex-col items-center">
-                      <Icon size={20} />
-                      <span className="text-[9px] font-bold text-gray-800 mt-1 truncate w-full text-center font-['Lato',sans-serif]">
+                    <div key={bucket.type} className="w-11 flex flex-col items-center">
+                      <Icon size={24} />
+                      <span className="text-[10px] font-bold text-gray-800 mt-1 truncate w-full text-center font-['Lato',sans-serif]">
                         {bucket.label}
                       </span>
                     </div>
@@ -609,7 +609,7 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
       </div>
 
       {/* 3. Arkets Footer: Solid 2px sort skillelinje */}
-      <div className="w-full border-t-2 border-black pt-3 flex justify-between items-center text-[13px] font-bold text-black font-['Lato',sans-serif]">
+      <div className="w-full border-t-2 border-black pt-3 flex justify-between items-center text-[13px] font-bold text-black font-['Lato',sans-serif] shrink-0">
         <span>Side {pageNumber} af {totalPages}</span>
         <span>Dataindsamling og sortering © KongSkole.dk</span>
       </div>
