@@ -611,38 +611,29 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
 
           {/* Bottom: Tydelig og større spørgsmålsboks */}
           <div className="w-full border-2 border-gray-300 rounded-2xl p-4 bg-gray-50/90 flex flex-col gap-3 shadow-xs">
-            <div className="flex items-center gap-1.5 text-xs font-black text-gray-800 uppercase tracking-wider font-['Lato',sans-serif]">
-              <span>❓ Svar på spørgsmålene</span>
+            {/* Spørgsmål 1: Flest / Færrest */}
+            <div className="flex flex-col gap-2">
+              <span className="font-bold text-sm text-gray-900">
+                {isMostQuestion ? '1: Hvilken ting er der flest af?' : '1: Hvilken ting er der færrest af?'}
+              </span>
+              <div className="grid grid-cols-4 gap-2">
+                {theme.buckets.map((b) => {
+                  const Icon = b.icon;
+                  return (
+                    <div key={b.type} className="flex items-center justify-center gap-2 bg-white border-2 border-gray-200 rounded-xl py-2 px-2 shadow-2xs">
+                      <div className="w-4 h-4 rounded border-2 border-gray-400 shrink-0"></div>
+                      <Icon size={24} />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            
-            <div className="flex flex-col gap-3 text-xs text-gray-900">
-              {/* Spørgsmål 1: Flest / Færrest */}
-              <div className="flex flex-col gap-2">
-                <span className="font-bold text-sm text-gray-900">
-                  {isMostQuestion ? '1. Hvilken ting er der flest af?' : '1. Hvilken ting er der færrest af?'}
-                </span>
-                <div className="grid grid-cols-2 gap-2">
-                  {theme.buckets.map((b) => {
-                    const Icon = b.icon;
-                    return (
-                      <div key={b.type} className="flex items-center gap-2 bg-white border-2 border-gray-200 rounded-xl px-2.5 py-1.5 shadow-2xs">
-                        <div className="w-4 h-4 rounded border-2 border-gray-400 shrink-0"></div>
-                        <Icon size={20} />
-                        <span className="text-xs font-bold text-gray-800 truncate">{b.label}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
 
-              {/* Spørgsmål 2: I alt */}
-              <div className="flex items-center justify-between pt-2 border-t border-gray-200">
-                <span className="font-bold text-sm text-gray-900">2. Hvor mange ting er der i alt?</span>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-12 h-8 rounded-xl border-2 border-dashed border-gray-400 bg-white flex items-center justify-center font-black text-sm"></div>
-                  <span className="text-xs font-bold text-gray-700">stk.</span>
-                </div>
-              </div>
+            {/* Spørgsmål 2: Der er _ ting i alt */}
+            <div className="flex items-center gap-2 pt-2.5 border-t border-gray-200">
+              <span className="font-bold text-sm text-gray-900">2: Der er</span>
+              <div className="w-12 h-8 rounded-xl border-2 border-dashed border-gray-400 bg-white flex items-center justify-center font-black text-sm shrink-0"></div>
+              <span className="font-bold text-sm text-gray-900">ting i alt</span>
             </div>
           </div>
 
