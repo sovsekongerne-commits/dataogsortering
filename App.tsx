@@ -5,82 +5,125 @@ import { Bucket } from './components/Bucket';
 import { DraggableItem } from './components/DraggableItem';
 import { LiveChart } from './components/LiveChart';
 import { generateQuizQuestion } from './services/geminiService';
-import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette, ArrowRight, Play, ArrowUp, ArrowDown, Printer } from 'lucide-react';
+import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette, ArrowRight, Play, ArrowUp, ArrowDown, Printer, HelpCircle } from 'lucide-react';
 import { gemMedalje, gemPoint, SPIL_NAVN } from './utils/cookieHelpers';
 import { WorksheetPreview } from './components/WorksheetPreview';
 
+const createItemsForTheme = (themeBuckets: Omit<BucketData, 'count'>[]) => {
+  const newItems: DraggableObject[] = [];
+  const availableTypes = themeBuckets.map(b => b.type);
+  for (let i = 0; i < TOTAL_ITEMS_TO_SPAWN; i++) {
+    const randomType = availableTypes[Math.floor(Math.random() * availableTypes.length)] as ItemType;
+    newItems.push({
+      id: `item-${i}-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      type: randomType
+    });
+  }
+  return newItems;
+};
+
 export default function App() {
-  const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
-  // Initialize buckets based on the current theme (defaulting to 0/Classic initially)
-  const [buckets, setBuckets] = useState<BucketData[]>(
-    THEMES[0].buckets.map(b => ({ ...b, count: 0 }))
-  );
-  const [items, setItems] = useState<DraggableObject[]>([]);
+  const [currentThemeIndex, setCurrentThemeIndex] = useState(() => Math.floor(Math.random() * THEMES.length));
+  
+  const [buckets, setBuckets] = useState<BucketData[]>(() => {
+    const initialIndex = Math.floor(Math.random() * THEMES.length);
+    return THEMES[initialIndex].buckets.map(b => ({ ...b, count: 0 }));
+  });
+
+  const [items, setItems] = useState<DraggableObject[]>(() => {
+    return createItemsForTheme(THEMES[currentThemeIndex]?.buckets || THEMES[0].buckets);
+  });
+
   const [dragOverBucket, setDragOverBucket] = useState<ItemType | null>(null);
   const [gameState, setGameState] = useState<'playing' | 'loading_quiz' | 'quiz' | 'finished'>('playing');
   const [quiz, setQuiz] = useState<QuizResponse | null>(null);
   const [quizFeedback, setQuizFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [mistakes, setMistakes] = useState(0);
-  const [tutorialStep, setTutorialStep] = useState(1);
+  const [tutorialStep, setTutorialStep] = useState(0);
   const [isWorksheetOpen, setIsWorksheetOpen] = useState(false);
 
-  // We need a ref to track if it's the very first load to avoid double resets in strict mode
-  const initialized = useRef(false);
-
-  // Initialize Items on mount
+  // Sync buckets and items if currentThemeIndex changes on mount
   useEffect(() => {
-    if (!initialized.current) {
-      initialized.current = true;
-      resetGame(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const resetGame = (randomizeTheme = true) => {
-    let newIndex = currentThemeIndex;
-    
-    if (randomizeTheme) {
-        // Pick a theme different from the current one to ensure variety
-        let nextIndex = Math.floor(Math.random() * THEMES.length);
-        if (nextIndex === currentThemeIndex && THEMES.length > 1) {
-            nextIndex = (nextIndex + 1) % THEMES.length;
-        }
-        newIndex = nextIndex;
-        setCurrentThemeIndex(newIndex);
-    }
-
-    const theme = THEMES[newIndex];
+    const theme = THEMES[currentThemeIndex] || THEMES[0];
     setBuckets(theme.buckets.map(b => ({ ...b, count: 0 })));
+    setItems(createItemsForTheme(theme.buckets));
     setGameState('playing');
     setQuiz(null);
     setQuizFeedback(null);
     setSelectedOption(null);
     setMistakes(0);
+  }, [currentThemeIndex]);
 
-    const newItems: DraggableObject[] = [];
-    const availableTypes = theme.buckets.map(b => b.type);
-    
-    // Create random assortment
-    for (let i = 0; i < TOTAL_ITEMS_TO_SPAWN; i++) {
-      const randomType = availableTypes[Math.floor(Math.random() * availableTypes.length)] as ItemType;
-      newItems.push({
-        id: `item-${i}-${Date.now()}`,
-        type: randomType
-      });
+  const resetGame = (randomizeTheme = true) => {
+    let nextIndex = currentThemeIndex;
+    if (randomizeTheme) {
+      if (THEMES.length > 1) {
+        nextIndex = Math.floor(Math.random() * THEMES.length);
+        if (nextIndex === currentThemeIndex) {
+          nextIndex = (nextIndex + 1) % THEMES.length;
+        }
+      }
     }
-    setItems(newItems);
+    setCurrentThemeIndex(nextIndex);
+    const theme = THEMES[nextIndex] || THEMES[0];
+    setBuckets(theme.buckets.map(b => ({ ...b, count: 0 })));
+    setItems(createItemsForTheme(theme.buckets));
+    setGameState('playing');
+    setQuiz(null);
+    setQuizFeedback(null);
+    setSelectedOption(null);
+    setMistakes(0);
+  };
+
+  const handleItemClick = (item: DraggableObject) => {
+    if (item.isSorted || gameState !== 'playing') return;
+    
+    setBuckets(currentBuckets => {
+      const newBuckets = [...currentBuckets];
+      let targetIndex = newBuckets.findIndex(b => b.type === item.type);
+      const correctBucketIndex = newBuckets.findIndex(b => b.type === item.type);
+
+      // If buckets are still unassigned (count === 0 everywhere), assign first available bucket
+      if (targetIndex === -1 || newBuckets[targetIndex].count === 0) {
+        const firstEmpty = newBuckets.findIndex(b => b.count === 0);
+        if (firstEmpty !== -1) {
+          targetIndex = firstEmpty;
+        }
+      }
+
+      if (targetIndex === -1 || correctBucketIndex === -1) return currentBuckets;
+
+      const targetBucket = newBuckets[targetIndex];
+      let isSuccess = false;
+
+      if (item.type === targetBucket.type) {
+        newBuckets[targetIndex] = { ...targetBucket, count: targetBucket.count + 1 };
+        isSuccess = true;
+      } else if (targetBucket.count === 0 && newBuckets[correctBucketIndex].count === 0) {
+        newBuckets[targetIndex] = { ...newBuckets[correctBucketIndex], count: 1 };
+        newBuckets[correctBucketIndex] = { ...targetBucket };
+        isSuccess = true;
+      }
+
+      if (isSuccess) {
+        setItems(prev => {
+          const next = [...prev];
+          const index = next.findIndex(i => i.id === item.id && !i.isSorted);
+          if (index !== -1) {
+            next[index] = { ...next[index], isSorted: true };
+          }
+          return next;
+        });
+        return newBuckets;
+      } else {
+        setMistakes(m => m + 1);
+        return currentBuckets;
+      }
+    });
   };
 
   const handleDrop = useCallback((droppedType: ItemType, targetBucketType: ItemType, droppedId: string) => {
-    // we will use the functional update for setBuckets to derive success, 
-    // BUT we need to know if it succeeded to update Items and Mistakes.
-    
-    // To solve this cleanly: We will perform the logic check using the functional update,
-    // but we'll need to trigger the side effects (items/mistakes) based on the result.
-    // Actually, the simplest fix for this app is to just include 'buckets' in the dependency array.
-    // It causes re-renders of DraggableItems on every drop, but for a small app, it's negligible.
-    
     setBuckets(currentBuckets => {
         const newBuckets = [...currentBuckets];
         const targetIndex = newBuckets.findIndex(b => b.type === targetBucketType);
@@ -207,8 +250,16 @@ export default function App() {
         </div>
         <div className="flex gap-2">
           <button 
+            onClick={() => setTutorialStep(1)}
+            className="bg-purple-50 hover:bg-purple-100 text-purple-700 px-3 sm:px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition-colors border-2 border-purple-100"
+            title="Se vejledning"
+          >
+            <HelpCircle size={20} />
+            <span className="hidden sm:inline">Vejledning</span>
+          </button>
+          <button 
             onClick={() => setIsWorksheetOpen(true)}
-            className="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition-colors border-2 border-indigo-100"
+            className="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-3 sm:px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition-colors border-2 border-indigo-100"
             title="Åbn opgaveark for udskrivning"
           >
             <Printer size={20} />
@@ -216,7 +267,7 @@ export default function App() {
           </button>
           <button 
             onClick={() => resetGame(true)}
-            className="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition-colors border-2 border-indigo-200"
+            className="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-3 sm:px-4 py-2 rounded-xl font-bold flex items-center gap-2 transition-colors border-2 border-indigo-200"
           >
             <RefreshCcw size={20} />
             <span className="hidden sm:inline">Nyt Spil</span>
@@ -293,7 +344,7 @@ export default function App() {
                      if (!config) return null;
                      return (
                        <div key={item.id} className={`transition-opacity duration-300 ${item.isSorted ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-                         <DraggableItem item={item} bucketConfig={config} />
+                         <DraggableItem item={item} bucketConfig={config} onClick={() => handleItemClick(item)} />
                        </div>
                      );
                   })}

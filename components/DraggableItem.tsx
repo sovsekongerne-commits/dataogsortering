@@ -4,9 +4,10 @@ import { DraggableObject, BucketData } from '../types';
 interface DraggableItemProps {
   item: DraggableObject;
   bucketConfig: BucketData;
+  onClick?: () => void;
 }
 
-export const DraggableItem: React.FC<DraggableItemProps> = ({ item, bucketConfig }) => {
+export const DraggableItem: React.FC<DraggableItemProps> = ({ item, bucketConfig, onClick }) => {
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.setData('id', item.id);
     e.dataTransfer.setData('type', item.type);
@@ -19,10 +20,11 @@ export const DraggableItem: React.FC<DraggableItemProps> = ({ item, bucketConfig
     <div
       draggable
       onDragStart={handleDragStart}
+      onClick={onClick}
       className={`
         cursor-grab active:cursor-grabbing hover:scale-110 transition-transform 
         bg-white p-1 rounded-full shadow-sm border-2 border-gray-100
-        flex items-center justify-center animate-bounce-in
+        flex items-center justify-center animate-bounce-in select-none
       `}
       style={{
         width: '64px',
