@@ -68,18 +68,10 @@ import {
   TableIcon,
   BedIcon,
   SofaIcon,
-  PotIcon,
-  KnifeIcon,
-  ForkIcon,
-  SpoonIcon,
   CakeIcon,
   ChocolateIcon,
   LollipopIcon,
   PopcornIcon,
-  KingIcon,
-  PrincessIcon,
-  KnightIcon,
-  DinosaurIcon,
   FirefighterIcon,
   PoliceIcon,
   DoctorIcon,
@@ -670,40 +662,6 @@ export const THEMES: GameTheme[] = [
     ]
   },
   {
-    id: 'kitchen',
-    name: 'Køkkengrej',
-    buckets: [
-      {
-        type: ItemType.POT,
-        label: 'Gryder',
-        color: 'bg-slate-600',
-        fill: '#475569',
-        icon: PotIcon,
-      },
-      {
-        type: ItemType.KNIFE,
-        label: 'Knive',
-        color: 'bg-zinc-400',
-        fill: '#a1a1aa',
-        icon: KnifeIcon,
-      },
-      {
-        type: ItemType.FORK,
-        label: 'Gafler',
-        color: 'bg-blue-300',
-        fill: '#93c5fd',
-        icon: ForkIcon,
-      },
-      {
-        type: ItemType.SPOON,
-        label: 'Skeer',
-        color: 'bg-amber-300',
-        fill: '#fcd34d',
-        icon: SpoonIcon,
-      },
-    ]
-  },
-  {
     id: 'sweets',
     name: 'Søde Sager',
     buckets: [
@@ -734,40 +692,6 @@ export const THEMES: GameTheme[] = [
         color: 'bg-yellow-300',
         fill: '#fde047',
         icon: PopcornIcon,
-      },
-    ]
-  },
-  {
-    id: 'fantasy',
-    name: 'Eventyr',
-    buckets: [
-      {
-        type: ItemType.KING,
-        label: 'Konger',
-        color: 'bg-amber-500',
-        fill: '#f59e0b',
-        icon: KingIcon,
-      },
-      {
-        type: ItemType.PRINCESS,
-        label: 'Prinsesser',
-        color: 'bg-pink-400',
-        fill: '#f472b6',
-        icon: PrincessIcon,
-      },
-      {
-        type: ItemType.KNIGHT,
-        label: 'Riddere',
-        color: 'bg-slate-500',
-        fill: '#64748b',
-        icon: KnightIcon,
-      },
-      {
-        type: ItemType.DINOSAUR,
-        label: 'Dinosaurer',
-        color: 'bg-emerald-600',
-        fill: '#059669',
-        icon: DinosaurIcon,
       },
     ]
   },
