@@ -616,13 +616,15 @@ export const WorksheetPrintPage: React.FC<WorksheetPrintPageProps> = ({
               <span className="font-bold text-sm text-gray-900">
                 {isMostQuestion ? '1: Hvilken ting er der flest af?' : '1: Hvilken ting er der færrest af?'}
               </span>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {theme.buckets.map((b) => {
                   const Icon = b.icon;
                   return (
-                    <div key={b.type} className="flex items-center justify-center gap-2 bg-white border-2 border-gray-200 rounded-xl py-2 px-2 shadow-2xs">
-                      <div className="w-4 h-4 rounded border-2 border-gray-400 shrink-0"></div>
-                      <Icon size={24} />
+                    <div key={b.type} className="flex items-center justify-between bg-white border-2 border-gray-200 rounded-xl py-1.5 px-3 shadow-2xs">
+                      <div className="w-5 h-5 rounded border-2 border-gray-400 shrink-0"></div>
+                      <div className="w-7 h-7 flex items-center justify-center shrink-0">
+                        <Icon size={26} />
+                      </div>
                     </div>
                   );
                 })}
