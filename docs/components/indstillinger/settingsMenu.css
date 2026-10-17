@@ -1,0 +1,561 @@
+/* ==========================================================================
+   1. SKRIFTTYPER & @FONT-FACE
+   ==========================================================================
+   Noto Sans anvendes som standard skrifttype.
+   OpenDyslexic defineres med base64-fallback for 100% pålidelighed på tværs af servere.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('data:font/otf;base64,T1RUTwAMAIAAAwBAQ0ZGIOkgzs4AAFOQAAHboEdERUY0HC9kAAIvMAAAAxxHUE9TPY303AACMkwAAG16R1NVQod/VOkAAp/IAAAO9k9TLzJYMqD6AAAdGAAAAGBjbWFwIOAvyAAAQoAAABDwaGVhZDKavo8AAADUAAAANmhoZWEN+hPGAAAc9AAAACRobXR4HJLODwAAAQwAABvobWF4cAb6UAAAAADMAAAABm5hbWUd92qwAAAdeAAAJQhwb3N0/58AMgAAU3AAAAAgAABQAAb6AAAAAQAAAAD9cVa7KqpfDzz1AAMD6AAAAADlUD4GAAAAAOVQPgb+Qv3rCqEGQwAAAAcAAgAAAAAAAAVIAB4DTwAABHAAvgRwAL4EcAC+BHAAvgRwAL4EcAC+BHAAvgRwAL4EcAC+BHAAvgRwAL4EcAC+BHAAfARwAL4EcAC+BHAAvgRwAL4EcAC+BHAAvgRwAL4EcAC+BHAAvgL6AFAEcAC+BHAAvgRwAL4EcAC+BHAAvgRwAL4FqwC+A88AvgPPAL4DzwA1A88AJgPrAL4D6wC+A+sAvgPrAL4D6wC+A+sAvgPrAL4EQQC+CKoAvgiqAL4EQQAyBEEAvgRBAL4EQQAyBEEAvgRBAL4EQQAVBEEAvgdyAL4HcgC+BEEAMgOdAL4DnQC+A50AvgOdAL4DnQC+A50AvgOdAL4DnQC+A53//QOdAL4DnQC+A50AvgOdAL4DnQC+A50AvgOdAL4DnQC+A50AvgK5AHEDnQC+AlcAUAOdAL4DnQC+Az4AmQLWAGQC1gBkA1kAvgNZAL4DWQBiBHwAvgR8AL4EfAC+BHwAvgR8AL4EfAC+BHwAvgR8AL4EfAC+BHwANQQvAL4ELwCJBC8AvgQvAL4ELwC+BC8AOQKXAFABygCMA5EAjAHKAIwBygAMAcoABAHK//wByv/rAcoAfwHKAIcBygAQAcoAegHK//UCWAELAi0AwAHKAGgBygAjAvMAvgLzAL4C8wC+BAAAvgQAAL4EAAC+BAAAUAONAL4F/gEQA40AvgON//gDjQC+A40AvgONAL4DjQC+A40AvgQmAHgDjQAqA43/KwTXAL4E1wC+BNcAvgTXAL4ENQC+BbUAvgQ1AL4ENQC+BDUAvgQ1AL4ENQC+BDUAvgQ1AL4EFwB4BZUAvgQ1AL4ENQC+BHcAvgR3AL4EdwC+BHcAvgR3AL4EdwC+BHcAvgR3AHwEdwC+BHcAvgR3AL4EdwC+BHcAvgR3AL4EdwC+BHcAvgR3AL4EdwC+BHcAvgR3AL4EdwC+BHcAvgR3AL4EdwC+BHcAvgR3AL4EdwC+A+sAvgSj//QElP+0BHcAvgR3AL4EswC+A5gAtAOYALQDmABQAjAANgPzAGQDzQC+A80AvgPNAL4DzQC+A80AvgPNADIDzQBGBGUAvgRlAL4EZQC+BGUAvgRlAL4EZQC+BGUAvgRlAL4EZQC+BGUAvgjKAL4ENQC+BDUAvgQ1AL4ENQC+BDUAvgQ1AL4ENQC+BDUAvgQ1AL4ENQC+BDUAvgQeAL4EHgC+BB4AEwQeAL4EHgC+BB4AvgQeAL4EHgC+BB4AvgQeAL4EHgC+BB4AvgQeAL4EHgC+BB4AvgQeAL4EHgC+BB4AvgQeAL4EHgC+BB4AvgQeAL4EHgC+BB4AvgPKAFoEHgC+BB4AvgQeAL4EhgC+A8IAUAQeAL4EhgC+BIYAvgWPAL4FjwC+BY8AvgWPAL4FjwC+BQMAeARvAL4EJgC+BCYAvgQmAL4EJgC+BCYAvgQmAL4EJgC+BCYAvgQmAL4EaQC+BGkAvgRpAL4EaQC+BGkAvgRpAL4BiABQA40AvgQ1AL4ClwCBAwgAgAJrAJoC3wCCATsAYAJvAIIC5wCDAzIAgQKfAIMCnwCDAtcAggM0AJkDNACZAzQAmQM0AJkDNACZAzQAmQM0AJkDNACZAzQAmQM0AJkDNACZAzQAmQM0AA8DNACZAzQAmQM0AJkDNACZAzQAmQM0AJkDNACZAzQAmQM0AJkDNACZAzQAmQM0AJkDNACZAzQAmQM0AJkDNACZAzQAmQTIAJkEyACZA1sAmQNbAIQDWwCZA1sAmAG8AFAEdwC+AmMAfQNb/9cC6wCZAusAmQLrAJkC6wCZAusAmQKuAFAC6wCZAvUASQLrAJkDSwCZA0sAmQNLAJkDSwCZA0sAmQNLAJkFHACZA0sAmQNLAJkDewB9A0sAmQTtAHgEjwCZBUAAmQTNAJkDRABQAz4AmQM+AJkDPgCZAz4AmQM+AJkDPgCZAz4AmQM+AJkDPgAoAz4AmQM+AJkDPgCZAz4AmQM+AJkDPgCZAz4AmQM+AJkDPgCZAz4AmQM+AJkB7ABQAewAUAJEAFAB7ABQAz4AmQNbACMDPgCZAz4AvwM+AJkDPgCZAtYAZALWAGQCdgCZAnYAmQSkAJkCdgBuAyUAmQMlAJkCwABQAyUAmQMlAJkDJQCZAyUAmQMlAJkDJQCZAd4AOwIcAEMB3gA7AhwAQwJiAEsDJQCZAyUAmQMlAJkDNgCZAzYALAM2ADwDNgCZAzYANwM2AJkDNgCZAzYAmQM2AJkBxACRAcQAoAHEAKABxAAeAcQAFgHE//0BxP/9AcQAkQHEAHwBxAAiAcQAjAHEAAcBxABqAU4AUAHEAAEBxAA1AcQAkQKGAJkChgCZAoYAmQKGAJkChgBuAoYAmQLqAJUDMACZAzAALgMwAJkCgQB3AzAAmQKU//0CHACPAhwAjwIcAC8CoABQAhwAjwIcAEYCHACKAhwAjwIcAI8D6wDIAisAUgPHAG4CHAAsA1oAjwIc/1ADWgCPBJIAmQSSAJkEkgCZBJIAmQQAAJkEkgAeBJIAmQMvAJkDLwCZAp0AUAMvAJkDLwCVAy8AmQMvAJkDLwCZAy8AmQOFAJ0C5QCZA/UAeAMvAA8DLwCZAy8AmQM8AJkDPACZAzwAmQM8AJkDPACZAzwAmQM8AJkDPACZAzwAHwM8AJkDPACZAzwAmQM8AJkDPACZAzwAmQM8AJkDPACZAzwAmQM8AJkDPACZAzwAmQM8AJkDPABfAzwAmQM8AJkDPACZAzwAmQM8AJkC6wCZAzwAggM8AIIDPACZAzwAmQM8AJkELgCZAzMAZAMzAGQEdwC+AzMAZAIwAFADM//xA7MAmQOzAJkDswCZApMAmQKTAJkCuABQApMAXgKTAGwCkwCZATwAUAE8/84CkwCTApMAmQJlAHgCkwA/ApMAmQMFAJkDBQCZAwUAmQMFAJkDBQCZAwUAmQMFAJkDBQCZAwUAmQMFAJkCqgBQAwUAmQMFAJkCCACcAsgAmQLIAHECyACZBCMArwLIAJkCyACZAsgAmQLIAJkCyACZA5kAlwLIAJkCyACZAsgAmQI2AFAELQB4AyAAmQMgAJkDIABQAyAAmQMgAJkDIACZAyAAmQMgAJkDIACZAyAAmQMgAJkDIACZAyAAmQMgAJkDIACZAyAAmQMgAJkDIACZAyAAmQMgAJkDIABEAyAAmQMgAJkDWgBQAyAAmQMgAJkDhACZAjAAUAOEAJkC5QB6BBAAmQQQAJkEEACZBBAAmQQQAJkEEACZBBAAmQN7AJkDRgCZA0YAmQNGAJkDRgCZA0YAmQNGAJkDRgCZA0YAmQNGAJkDBAB4AzEAmQMxAJkDMQCZAzEAmQLWAFADMQCZAzEAmQMxAJgCpwCZARkAUAIcAI8DLwCZAkAAUAPeAJYFAgCWBVIAlgTKAJYDaACWA+QAlgPtAJYEygCWAaMAdgGkAHYCXwBRAQAAUAIhAFABxACRAeIAiAGeAL0CHACPAy8AmQJYAG4EcAC+Ao8AUAKvAFACjwBQAo8AUAKPAFACjwBQAo8AIwKoAFADRABQAnYAUAJ2AFACdgBQBZAAvgKAAFAENQC+BDUAvgQ1AL4EAAC+BAAAvgLpAGQDTwBQBC8AvgR3AL4CqABQA5gAtAPrAL4ENQC+ArQARQK0AEUDaABQBG8AvgKXAFAC0ABQAyoAUAOJAFACwwBQApkAZARjAGQCmf+0BIoAeAReAHgEZQC+A5wAigOcAHgBygCMAcr/6wLzAL4ENQC+A+kAeAPNAL4D/ACHA0AAkQPzAHgEKAC4BIYAvgUEAHgC0AB4A3cAeAPKAHgEAACiBAD/vAOjAHgELwC+BJgAeAM4AHgEoQB4A+sAvgOpAHgEJgC+BCYAvgPjAHgEKAB4A0EAUALXAFgC9AB4AvQAeAPKAAYEQwB4AcoAjAWQAL4DEAB4AukAZAQvAL4ELwC+AqQAKATXAL4EcAC+BHAAvgWrAL4CdgBQAz4AmQM+AJkFJgC+AoAARwJJAGAENQC+BDUAvgR3AL4EMQDGBDEAxgOcAHgCtABFArQARQK0ACIClwBQBGMAZARvAL4CgABQAvUAmAWPAL4DRABQAukAZANoAFADNACZAr0AUALdAI8CVQBQAlUAUAJVAFABxwA4AcIAGAGrADIC/gBQAz4AmQM+AJkClgBQBKoAnwG9ADgCnwBQAp8AUAKfAFADGACTAxgAkwH9AEQDoQCOA48AogKWAFAClwBQAzMAZALrAJkCrABQA0YAmQNGAJkDaABQAsYAUAHEADYCyQBQAyoAUAN8AFACBwA7Al8AUAMwAFAC7wBQAx4AUgMFAFMDBQCZAoEAYAKDAFABxACRAcT//QKGAJkDNgAsAyEAYAJvAFADNgAsAtUAUALEAFQDPACPAyoAhQNxAFIBvQA4AmMAUwLOAFkDMAAnArv/0gKDAFMC4QCDAjYAUgQlAFQDpgBfAusAmQKDAFICmABQApgAOQKqAFIC/QBWAlUAOQHxADwDNgCZAtAAmQK4AAQDFABXARwAUASqAJ8CFwBSAf8ARQLiAIMC5ACDAfcAUANNAIIDNACZAzQAmQTIAJkDPgCZAz4AvwM+AL8EqgCfAb0AOAJJAGACnwBQAp8AUAKWAFADPACZAzwAmQKDADIDRgCZA0YAmQNGAG8BxP/vAzAAUAMOAIMBvQA4AgkAaQQQAJkC3QCPAo8AUAL+AFAEqgCfAb0AOAKfAFACnwBQAp8AUAMYAJMB/QBEApcAUAKsAFACyQBQAyoAUAN8AFACXwBQAu8AUAKUACUCvQBQAlUAUAL+AFAClwBQAvkAhgMqAFAEcAC+A88AvgI6AFADXABQA50AvgRpAL4ELwC+BHcAvgHKAIwEAAC+BIYAvgTXAL4ENQC+AvsAUAR3AL4CcABQA5gAtAJXAFAENQC+BCYAvgV2AOgEbwC+AywAUANaAFAEcACnA53/9gQv//cByv/FBHf/9wQm//cDWv//Acr/6wQmAL4CDQBQBDUAvgQ1AL4EXAC+AvcAUANZAL4CaAA8AtwAUAQAAL4CbQBQBNcAvgRwAIYEcACxBHAAIQRw/2EEcP/TBHAAdQRwAAoEcP/VBHAAAgRwAIkEcAC+BHAAvgUYAJYFGP+7BRj/5gUYAJYFGP6WBRj/CAUY/6MFGP8/BRj/CgOdAL4DnQAAA50AvgOd/rADnf8iA53+9AOd/xoDnf/YBC//ogQv/80FsQC/BhgAZgX+AL4GDwEwBccAvgWeAGAEL/92BC//pQVtAL4EL/+iBC//zQQvAL4EL/59BC/+7wQv/1AEL/8mBC/+8QHK/3sByv+SAcr/AgHK/kIByv60Acr/VgHK/usByv62Acr+4wHK/2oBygAPAcoAAwR3/9YEdwABBHcAvgR3/rEEd/8jBHf/IgR3/0gEd//ZBL0AtAQmAAEEJv6xBCb+rAQm/yUEJv7SBCb/2QQmAL4EJgC+A1r/3gNaAAkDWgBQA1r+uQNa/ysDWv+BA1r/YgNa/y0DWv+nA1r/4QNaAFADWv+8A1r/5wNa/1cDWv6XA1r/CQNa/4EDWv9AA1r/CwOqAJkCrwBQApcAUAKzAFAB7ABQAjsAUALaAFACmABQAg8AnALAAIMDBAB4AyAAbQKaAFACLgBQAzwAmQLNAFAC2wBQAiYAUANGAJkCkQBQAkcAUAR3AL4DOgBQAo0AUQMeAFACDwCWAg///wIPABYCRwBQAkcAHwJHAB8DPACZAx4AUAM0AJkB7ABQAtoAUAFbADUCxAB9AusAhALyAIAB+gA2AkcAvgKVADoDLABQA08AnQKvAFACmABQBHcAvgMe/8ICLQBQA1oAhAOqAJkDqgCZA6oAmQOqAJkDqgCZA6oAmQOqAJkDqgCZA6oAmQOqAJkDqgCZA6oAmQOqAJkDqgCZA6oAmQOqAJkDqgCZA6oAmQOqAJkDqgCZA6oAmQOqAJkDqgCZA6oAmQOqAJkB7ABQAewAUAHsAFAB7ABQAewAUAHsADYB7ABQAewAUALaAFAC2gBQAtoAUALaAFAC2gBQAtoAUALaAFAC2gBQAtoAUALaAFAC2gBQAtoAUALaAFAC2gBQAtoAUALaAFAC2gBQAtoAUALaAFAC2gBQAtoAUALaAFAC2gBQAg8AnAIPAIICDwBFAg8ASQIPAGkCDwAlAg8AOgIPAGICDwBRAg8AnAIPADoCDwAjAg8ACQIPAA8CDwAPAg8ADwM8AJkDPACZAzwAmQM8AJkDPACZAzwAmQM8AJkDPACZAtsAUALbAFACRwBQAkcAUAJHAFACRwBQAkcAUAJHAEUCRwBQAkcAUAJHAFACRwBQAkcAUAJHAEMCRwApAkcALwJHAC8CRwAvAx4AUAMeAFADHgBQAx4AUAMeAFADHgBQAx4AUAMeAFADHgBQAx4AUAMeAFADHgBQAx4AUAMeAFADHgBQAx4AUAMeAFADHgBQAx4AUAMeAFADHgBQAx4AUAMeAFABIABQA3kAUAFrAFABIABQAeEAUAHhAFABygCMA5QAjAVeAIwGUACMBIYAvgZQAL4IGgC+CeQAvgY5AIwEbwC+BjkAvggDAL4DjQC+A+sAvgRBAL4E1wC+AcQAkQOIAJEFTACRBUgAkQOEAJkFSACZBwwAmQjQAJkFPwCRA3sAmQU/AJkHAwCZAhwAjwLrAJkDSwCZBJIAmQKYAFACRABQAn8AUAKAAFACmQBQAngAUAKYAFACdABQAqoAUAKXAFACmABQAkQAUAJ/AFACgABQApkAUAJ4AFACmABQAnQAUAKqAFAClwBQApgAUAJEAFACfwBQAoAAUAKZAFACeABQApgAUAJ0AFACqgBQApcAUAKYAFACRABQAn8AUAKAAFACmQBQAngAUAKYAFACdABQAqoAUAKXAFACmABQAkQAUAJ/AFACgABQApkAUAJ4AFACmABQAnQAUAKqAFAClwBQAcMANgGDADUBqgA1AasANQG7ADUBpQA1AbsANQGjADUBxwA1AboANQG7ADUBgwA1AaoANQGrADUBuwA1AaUANQG7ADUBowA1AccANQG6ADUETwETBE8ArARPAKwETwCRBE8ArARPAH8ETwCsBE8AkQRPAH8ETwB/BE8ArARPAH8ETwCsBE8AfwRPAH8ETwB/AcMANgEuACoBRgApAUEAKAFLACgBLgAmAUoAKAFHACoBUwAnAUwAKAE8ACYBHQAnASQAJQE/ACgBQwAnAUAAKQFEACcBTAAqAUwAJwFNACgDTwAAAzQAAAUoAAADNAAABSgAAAKNAAACOgAAAecAAAKYAAABBQAAAggAAAHPAAABQAAAAAAAAAAAAAAE8AAAEtQAAAAAAAAAAAAABSgAAAEFADIBQQAxAd0AUAHdAFABBQAyAUEAMQEPAC8BQQAxA7AAMgFRACoBUQAqAj8AIgI/ACIBBQAyAf3/6QJ7AFADHQBQAiwAUAIhAFADJgAqAVEAKgD+AFAC7ABlBHIAUAEFADICJwBQBPEAZQPfAGQFNADnAkUAFAHYAFABiQBQAUEAKgEFADICKQBQAlkAUAInAFADHABQBGcAUALtAFAEZwBQAicAUAInAFADHABQAxAAUAG1AGYBtQAuAbUAZgG1AC4CMQBQAjEAUAHXAEwB1wBOAUEAMQFBADECNQAyAjcAMgFKADIBSgAyAUoAMgI3ADoB/gAaAoAAUAKAAFABoQBQAaEAUAFSAD4DUAA+A1AAPgIfADABDwAtAbgAUANbACMBHwA+AUEAMQIGAFADegBQBIoAUASKAFABoABQAqEAUAO6/6MDzwC+Aob/ygFUAEQCOABQAjgAUAI4AFACOABQAjgAUAJeAFAB3gCaAXcAUAOQAFAEigBQAqYAUAPeAFADnABQAswAUAJLAFADIgBQAsQAdANIAFACoQBQApoAUAK+AFACoABQAqEAUAK4AFADaABQA/YAUAMCAFAEJABQAXQAUALcAG0C2gBvBKMA0wPFAHgCZwBQA0cAmwIaAFACGgBQAokAMgLeAEgCGgA3AUEAMgIuADIBAABQAQAAUAJEACgCcwBQAlgAMgOFACAG+QC+AyAAZAPrACsJXAC+A1kABAL1AL4LXwC+AusAmQLrAJkD6wC+A+sAvgKeAFAEvADNAqUAUALpAFEEfAC+A5kAUAKzAC0CsQBQAm4AUAQ1AGQDmABEAoYAFQOY//cEcwCWAl0AUAQrAJwCswAtBDUAuQQ1AL4DWwA4AvwAUALlAGQC4gBQAmwAUAJeAFACTgBQAvsAUAJeAFAETwD6AyUAUAMlAFADXQBQA10AUAJsAFADBwB0AdQAPAJjAFACLABQBHcAZAOTAFADWwAjA1wAUALiAFACVwBQA6MAUAKxAFADIABtA94A4wRPAQwBDwAvAvkAUAJ+AFAC9ABQAnwAUAL5AFACfABQAvQAUAJ+AFADeQBQApEAUAOPAFADVABQA48AUANUAFADygBQAwkAUAL0AFADKABQA/oAUAOiAFADlABQA+0AUAJYAAABywBQAtQAUALUAFACdgBQAXQAUAL4AFAD9gBQAXgAUANuAFADbgBQAcMAUAHrAFAC+AAAA2IAfAL8AFADCQBQAvwAUAMIAFAC/ABQAwgAUAL8AFADZABQA2QAUANkAFADZABQAcAAUQG5AFABwABRAbkAUAH8AFAB9QBQAfwAUAH1AFADcgBQAAAAUAAAAFAAAAA8AAAAUAAAADIAAABQAR8APgEfAD4CFQAyASUAWgElAFoBCwBQAQsAUAELAC0BJQBGAtIAzwKlAKACpQCgAR//rAH8AFoCKgBQAioAUAGS//oBkgAwAQv/4wEL/+MCFQAyAhUAMgIVADICFQAyAhUAMgIVADIBmgA2AZoANgEfAD4BHwA+AdQAPAHUADwC0gDPAAAAMgAAADIAAAA2AAAAWgAAAD4AAABaAAAANgAAAFAAAABQAAAAUAAAAFAAAABEAAAAPAAAAFoAAABaAAAAWgAAAFAAAAAhAAD/QgAAACoAAAAxAAAAKgAAAFAAAABQAAAAUAAAAEoAAABQAAAAUAAAAFAAAABQAAAAUAAAADIAAAAyAAAARAAAADEAAAAxAAAARQAAAFAAAABLAAAAUAAAAFAAAABEAAAAPAAAAFAAAABQAAAAPAAAAFAAAABQAAAAUAAAAFAAAABQAAAAagAAAFAAAABQAAAASwAAAFAAAAA8AAAAMgAAAHQAAABkAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABlAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAIVADIBBQAyAZoANgEfAD4DNAA2AiwAUAIsAFACKQBQAVQARAHUADwCAgBQAUcARQFXAFABmgA2AboAUAG6AFACWACYAlgAZAFdAFABUgA+AP8ASwD/AEsD6AC1ArYAbgLuAR4D+QC2AlkAUAL0AG4BXwBQAfIAZAGpAD8BVwBQAV8AUAKoAFABXwBQAYcACgMXAUgBZgBAAwoAKAMJALwAAQAABRT9+AAAEtT+Qvv/CqEAAQAAAAAAAAAAAAAAAAAABvoABAMvAZAABQAIAooCWAAAAEsCigJYAAABXgAyARgAAAAAAAAAAAAAAADhAAL/QAHoewAAAAAAAAAAVUtXTgDAACD7BgUU/fgAAAZDAhUgAAGfAAAAAAIwA1IAAAAgAAMAAAAMAJYAAwABBAkAAABwAAAAAwABBAkAAQAYAHAAAwABBAkAAgAOAIgAAwABBAkAAwA+AJYAAwABBAkABAAoANQAAwABBAkABQBCAPwAAwABBAkABgAoAT4AAwABBAkACQAcAWYAAwABBAkADAAmAYIAAwABBAkADSLKAagAAwABBAkAEAAYAHAAAwABBAkAEQAOAIgAQwBvAHAAeQByAGkAZwBoAHQAIACpACAAMgAwADEAOQAgAGIAeQAgAEEAYgBiAGkAZQAgAEcAbwBuAHoAYQBsAGUAegAuACAAQQBsAGwAIAByAGkAZwBoAHQAcwAgAHIAZQBzAGUAcgB2AGUAZAAuAE8AcABlAG4ARAB5AHMAbABlAHgAaQBjAFIAZQBnAHUAbABhAHIAMAAuADkAOQAwADsAVQBLAFcATgA7AE8AcABlAG4ARAB5AHMAbABlAHgAaQBjAC0AUgBlAGcAdQBsAGEAcgBPAHAAZQBuAEQAeQBzAGwAZQB4AGkAYwAgAFIAZQBnAHUAbABhAHIAVgBlAHIAcwBpAG8AbgAgADAALgA5ADkAMAA7AEcAbAB5AHAAaABzACAAMwAuADQALgAxACAAKAAzADQAMwA2ACkATwBwAGUAbgBEAHkAcwBsAGUAeABpAGMALQBSAGUAZwB1AGwAYQByAEEAYgBiAGkAZQAgAEcAbwBuAHoAYQBsAGUAegBoAHQAdABwAHMAOgAvAC8AYQBiAGIAaQBlAGMAbwBkAC4AZQBzAEMAbwBwAHkAcgBpAGcAaAB0ACAAKABjACkAIAAyADAAMQA5AC0AMAA3AC0AMgA5ACwAIABBAGIAYgBpAGUAIABHAG8AbgB6AGEAbABlAHoAIAAoAGgAdAB0AHAAcwA6AC8ALwBhAGIAYgBpAGUAYwBvAGQALgBlAHMAfABzAHUAcABwAG8AcgB0AEAAYQBiAGIAaQBlAGMAbwBkAC4AZQBzACkALAAKAHcAaQB0AGgAIABSAGUAcwBlAHIAdgBlAGQAIABGAG8AbgB0ACAATgBhAG0AZQAgAE8AcABlAG4ARAB5AHMAbABlAHgAaQBjAC4ACgBDAG8AcAB5AHIAaQBnAGgAdAAgACgAYwApACAAMQAyAC8AMgAwADEAMgAgAC0AIAAyADAAMQA5AAoAVABoAGkAcwAgAEYAbwBuAHQAIABTAG8AZgB0AHcAYQByAGUAIABpAHMAIABsAGkAYwBlAG4AcwBlAGQAIAB1AG4AZABlAHIAIAB0AGgAZQAgAFMASQBMACAATwBwAGUAbgAgAEYAbwBuAHQAIABMAGkAYwBlAG4AcwBlACwAIABWAGUAcgBzAGkAbwBuACAAMQAuADEALgAKAFQAaABpAHMAIABsAGkAYwBlAG4AcwBlACAAaQBzACAAYwBvAHAAaQBlAGQAIABiAGUAbABvAHcALAAgAGEAbgBkACAAYQByAGUAIABhAGwAcwBvACAAYQB2AGEAaQBsAGEAYgBsAGUAIAB3AGkAdABoACAAYQAgAEYAQQBRACAAYQB0ADoACgBoAHQAdABwADoALwAvAHMAYwByAGkAcAB0AHMALgBzAGkAbAAuAG8AcgBnAC8ATwBGAEwACgAKAAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQpTSUwgT1BFTiBGT05UIExJQ0VOU0UgVmVyc2lvbiAxLjEgLSAyNiBGZWJydWFyeSAyMDA3Ci0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpQUkVBTVBMRQpUaGUgZ29hbHMgb2YgdGhlIE9wZW4gRm9udCBMaWNlbnNlIChPRkwpIGFyZSB0byBzdGltdWxhdGUgd29ybGR3aWRlCmRldmVsb3BtZW50IG9mIGNvbGxhYm9yYXRpdmUgZm9udCBwcm9qZWN0cywgdG8gc3VwcG9ydCB0aGUgZm9udCBjcmVhdGlvbgplZmZvcnRzIG9mIGFjYWRlbWljIGFuZCBsaW5ndWlzdGljIGNvbW11bml0aWVzLCBhbmQgdG8gcHJvdmlkZSBhIGZyZWUgYW5kCm9wZW4gZnJhbWV3b3JrIGluIHdoaWNoIGZvbnRzIG1heSBiZSBzaGFyZWQgYW5kIGltcHJvdmVkIGluIHBhcnRuZXJzaGlwCndpdGggb3RoZXJzLgoKVEhFIE9GTExPV1MgVEhFIExJQ0VOU0VEIEZPTlRTIFRPIEJFIFVTRUQsIFNUVURJRUQsIE1PRElGSUVEIEFORApSRURJU1RSSUJVVEVEIEZSRUVMWSBBUyBMT05HIEFTIFRIRVkgQVJFIE5PVCBTT0xEIEJZIFRIRU1TRUxWRVMuIFRIRQpGT05UUywgSU5DTFVESU5HIEFOWSBERVJJVkFUSVZFIFdPUktTLCBDQU4gQkUgQlVORExFRCwgRU1CRURERUQsIApSRURJU1RSSUJVVEVEIEFORC9PUiBTT0xEIFdJVEggQU5ZIFNPRlRXQVJFIENPTlRBSU5JTkcgVEhFIEZPTlRTIFNPIExPTkcKQVMgQU5ZIFJFU0VSVkVEIE5BTUVTIEFSRSBOT1QgVVNFRCBCWSBERVJJVkFUSVZFIFdPUktTLg==') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================================================
+   2. CSS VARIABLER & MATEMATISK IKON-AFSTAND
+   ==========================================================================
+   For at sikre at alle ikoner altid står med PRÆCIS samme indbyrdes afstand,
+   anvendes en fast kolonnebredde (--item-width) for hvert menufelt.
+   Afstand = --item-width + --item-gap.
+*/
+.settings-menu-container {
+    --font-main: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --item-width: 68px;          /* Ensartet bredde for hvert ikon-element */
+    --item-gap: 12px;            /* Afstand mellem hvert felt */
+    --item-font-size: 10px;      /* Tekststørrelse */
+    --trigger-size: 60px;        /* Størrelse på tandhjulet */
+    --pad-left: 10px;            /* Polstring til venstre for elementer */
+    --pad-right: 20px;           /* Polstring til højre for elementer */
+    --visible-items: 5;          /* Standard i hovedmenu: 5 knapper */
+
+    /* Farvetema iht. COLORS.md */
+    --color-bg-page: #FAE5C8;
+    --color-menu-bg: #FFFFFF;
+    --color-icon: #969696;
+    --color-icon-hover: #505050;
+    --color-label: #646464;
+    --color-active-blue: #5893D4;
+    --color-active-blue-deep: #29619F;
+    --color-danger: #E84444;
+    --color-danger-hover: #B21616;
+
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 50;
+    font-family: var(--font-main);
+    max-width: calc(100vw - 32px);
+    overflow: visible;
+}
+
+/* Dysleksivenlig tilstand */
+body.dyslexia-mode,
+.settings-menu-container.is-dyslexia,
+.settings-info-modal.is-dyslexia {
+    --item-width: 98px;          /* Udvidet kolonnebredde til OpenDyslexic */
+    --item-gap: 14px;            /* Forøget mellemrum */
+    --item-font-size: 9.5px;
+    font-family: 'OpenDyslexic', var(--font-main);
+}
+
+body.dyslexia-mode .settings-menu-item span,
+body.dyslexia-mode .settings-modal-card,
+.settings-menu-container.is-dyslexia .settings-menu-item span,
+.settings-info-modal.is-dyslexia .settings-modal-card {
+    font-family: 'OpenDyslexic', var(--font-main);
+    letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   3. KONTEKSTSTYRING
+   ========================================================================== */
+.settings-menu-container[data-context="main-menu"] {
+    --visible-items: 5;
+}
+.settings-menu-container[data-context="game"] {
+    --visible-items: 6;
+}
+.settings-menu-container[data-context="game-direct"] {
+    --visible-items: 6;
+}
+.settings-menu-container[data-context="all"] {
+    --visible-items: 8;
+}
+
+/* ==========================================================================
+   4. MENU BACKGROUND & SCROLL CONTAINER
+   ========================================================================== */
+.settings-background {
+    background-color: var(--color-menu-bg);
+    border-radius: 9999px;
+    box-shadow: 0 4px 14px -1px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 60px; /* Startbredde = lukket cirkel */
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.settings-background.is-open {
+    width: calc(
+        var(--trigger-size) +
+        var(--pad-left) +
+        (var(--item-width) * var(--visible-items)) +
+        (var(--item-gap) * (var(--visible-items) - 1)) +
+        var(--pad-right)
+    );
+}
+
+/* ==========================================================================
+   5. TANDHJUL TRIGGER
+   ========================================================================== */
+.settings-trigger {
+    width: 60px;
+    height: 60px;
+    min-width: 44px;
+    min-height: 44px;
+    flex-shrink: 0;
+    background: var(--color-menu-bg);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    position: sticky;
+    left: 0;
+    z-index: 20;
+    transition: box-shadow 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.settings-background.is-open .settings-trigger {
+    box-shadow: 2px 0 8px -2px rgba(0, 0, 0, 0.08);
+}
+
+.settings-trigger svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--color-icon);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transform-origin: 50% 50%;
+    transform-box: fill-box;
+    pointer-events: none;
+    transition: transform 0.15s ease;
+}
+
+.settings-trigger:hover svg {
+    animation: settings-spin-with-blur 0.8s ease-out;
+}
+
+.settings-trigger:active svg {
+    transform: scale(0.9);
+}
+
+/* ==========================================================================
+   6. MENU CONTENT & HORISONTAL SCROLL
+   ========================================================================== */
+.settings-menu-content {
+    display: flex;
+    align-items: center;
+    gap: var(--item-gap);
+    padding-left: var(--pad-left);
+    padding-right: var(--pad-right);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-8px);
+    transition: opacity 0.25s ease,
+                transform 0.25s ease,
+                gap 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: none;
+    touch-action: pan-x;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    cursor: grab;
+    user-select: none;
+}
+
+.settings-menu-content:active {
+    cursor: grabbing;
+}
+
+.settings-menu-content::-webkit-scrollbar {
+    display: none;
+}
+
+.settings-background.is-open .settings-menu-content {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition: opacity 0.3s 0.08s ease,
+                transform 0.3s 0.08s ease,
+                gap 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   7. MENUPUNKTER (ITEMS)
+   ========================================================================== */
+.settings-menu-item {
+    flex: 0 0 var(--item-width);
+    width: var(--item-width);
+    min-height: 48px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    outline: none;
+    padding: 0;
+    perspective: 500px;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.18s ease-out;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.settings-menu-item:hover {
+    transform: scale(1.08);
+}
+
+.settings-menu-item:active {
+    transform: scale(0.95);
+}
+
+.settings-menu-item span {
+    font-size: var(--item-font-size);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-label);
+    white-space: nowrap;
+    text-align: center;
+    user-select: none;
+    transition: color 0.2s ease, font-size 0.3s ease;
+}
+
+.settings-menu-item svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--color-icon);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease;
+}
+
+.settings-icon-wrapper {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   8. SPECIFIKKE KNAP-HOVERS OG ANIMATIONER
+   ========================================================================== */
+.settings-menu-item.back-btn:hover svg {
+    animation: settings-bounce-left 0.8s ease-out;
+}
+
+.settings-menu-item.home-btn:hover svg {
+    animation: settings-home-bounce 0.6s ease-out;
+}
+
+/* Lyd */
+.settings-menu-item.audio-btn:hover svg {
+    animation: settings-sound-pulse 0.6s ease-out;
+}
+.settings-menu-item.audio-btn.is-muted svg {
+    stroke: #BEBEBE;
+}
+.settings-menu-item.audio-btn.is-muted span {
+    color: #969696;
+}
+
+/* Fuldskærm */
+.settings-menu-item.fullscreen-btn:hover .fs-enter {
+    animation: settings-expand-icon 0.6s ease-out;
+}
+.settings-menu-item.fullscreen-btn:hover .fs-exit {
+    animation: settings-shrink-icon 0.6s ease-out;
+}
+
+/* Hjælp */
+.settings-menu-item.help-btn:hover svg {
+    animation: settings-card-flip-blur 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Dysleksi */
+.settings-menu-item.dyslexia-btn:hover svg {
+    animation: settings-letter-wobble 0.6s ease-out;
+}
+.settings-menu-item.dyslexia-btn.is-active svg {
+    stroke: var(--color-active-blue-deep);
+}
+.settings-menu-item.dyslexia-btn.is-active span {
+    color: var(--color-active-blue-deep);
+}
+
+/* Info */
+.settings-menu-item.info-btn:hover svg {
+    animation: settings-info-bounce 0.6s ease-out;
+}
+
+/* Afslut */
+.settings-menu-item.logout-btn span {
+    color: var(--color-danger);
+}
+.settings-menu-item.logout-btn svg {
+    stroke: var(--color-danger);
+}
+.settings-menu-item.logout-btn:hover svg {
+    stroke: var(--color-danger-hover);
+}
+
+/* ==========================================================================
+   9. KEYFRAMES
+   ========================================================================== */
+@keyframes settings-spin-with-blur {
+    0% { transform: rotate(0deg); filter: blur(0); }
+    50% { filter: blur(2px) opacity(0.8); }
+    100% { transform: rotate(360deg); filter: blur(0); }
+}
+
+@keyframes settings-expand-icon {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    30% { transform: scale(1.3) rotate(10deg); }
+    60% { transform: scale(0.9) rotate(-5deg); }
+}
+
+@keyframes settings-shrink-icon {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    30% { transform: scale(0.7) rotate(-10deg); }
+    60% { transform: scale(1.1) rotate(5deg); }
+}
+
+@keyframes settings-bounce-left {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-2px); }
+}
+
+@keyframes settings-home-bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    35% { transform: translateY(-4px) scale(1.08); }
+    70% { transform: translateY(1px) scale(0.98); }
+}
+
+@keyframes settings-card-flip-blur {
+    0% { transform: rotateY(0deg); filter: blur(0); }
+    40% { filter: blur(2px); }
+    50% { transform: rotateY(360deg); filter: blur(4px) opacity(0.7); }
+    60% { filter: blur(2px); }
+    100% { transform: rotateY(720deg); filter: blur(0); }
+}
+
+@keyframes settings-sound-pulse {
+    0%, 100% { transform: scale(1); }
+    35% { transform: scale(1.22); }
+    70% { transform: scale(0.92); }
+}
+
+@keyframes settings-letter-wobble {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-3px) rotate(-6deg); }
+    50% { transform: translateY(1px) rotate(4deg); }
+    75% { transform: translateY(-1px) rotate(-2deg); }
+}
+
+@keyframes settings-info-bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    35% { transform: translateY(-4px) scale(1.1); }
+    70% { transform: translateY(1px) scale(0.98); }
+}
+
+/* ==========================================================================
+   10. INFO POP-UP MODAL
+   ========================================================================== */
+.settings-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(25, 25, 25, 0.45);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 100;
+    font-family: var(--font-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.settings-modal-overlay.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.settings-modal-card {
+    background: #FFFFFF;
+    width: 100%;
+    max-width: 440px;
+    max-height: 90vh;
+    border-radius: 24px;
+    padding: 24px 26px 26px 26px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.05);
+    transform: scale(0.92) translateY(10px);
+    transition: transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-modal-overlay.is-visible .settings-modal-card {
+    transform: scale(1) translateY(0);
+}
+
+.settings-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+}
+
+.settings-modal-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-modal-title-wrapper svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--color-active-blue-deep);
+    stroke-width: 2.2;
+    fill: none;
+}
+
+.settings-modal-title {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    color: #2D3748;
+}
+
+.settings-modal-close-btn {
+    background: #F3F4F6;
+    border: none;
+    border-radius: 9999px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.settings-modal-close-btn:hover {
+    background: #E5E7EB;
+    transform: scale(1.08);
+}
+
+.settings-modal-close-btn:active {
+    transform: scale(0.94);
+}
+
+.settings-modal-close-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: #4B5563;
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+}
+
+.settings-modal-body {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #4B5563;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.settings-modal-body p {
+    margin: 0 0 10px 0;
+}
+
+.settings-modal-section-title {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #9CA3AF;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+.settings-modal-section-title:first-child {
+    margin-top: 0;
+}
+
+.settings-modal-credits-box {
+    background: #F9FAFB;
+    border: 1px solid #EEF0F3;
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-size: 12.5px;
+    color: #4B5563;
+    line-height: 1.55;
+}
+
+.settings-modal-credits-box p {
+    margin: 0;
+}
+
+.settings-modal-credits-box a {
+    color: var(--color-active-blue-deep);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.settings-modal-credits-box a:hover {
+    text-decoration: underline;
+}
+
+.settings-credit-divider {
+    height: 1px;
+    background: #E5E7EB;
+    margin: 10px 0;
+}

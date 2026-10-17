@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faldende Kort Animation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #DEEBD7; /* Samme baggrundsfarve som spillet */
+            font-family: 'Nunito', sans-serif;
+        }
+        .card {
+            width: 12rem; /* 192px */
+            height: 12rem; /* 192px */
+            background-color: #F3C689;
+            color: #B67012;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease-out;
+        }
+        .card:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+    </style>
+    <!-- Denne style-tag vil blive fyldt med animationen af JavaScript -->
+    <style id="dynamic-animations"></style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 overflow-hidden">
+
+    <div id="letter-card" class="card rounded-3xl flex items-center justify-center text-8xl font-bold">
+        <span>A</span>
+    </div>
+
+    <script>
+        const letterCard = document.getElementById('letter-card');
+        const dynamicAnimationsStyle = document.getElementById('dynamic-animations');
+
+        letterCard.addEventListener('click', () => {
+            // Nulstil tidligere animationer og ryd keyframes
+            letterCard.style.animation = '';
+            dynamicAnimationsStyle.innerHTML = '';
+            
+            // Definer tilfældige værdier for animationen
+            const randomX = (Math.random() - 0.5) * 200; // Tilfældig sideværts bevægelse
+            const randomRotate = (Math.random() - 0.5) * 720; // Tilfældig rotation
+            const randomDuration = 1.2 + Math.random() * 0.5; // Tilfældig varighed
+            
+            // Opret et unikt navn til keyframe-animationen
+            const animationName = `fall-animation`;
+            
+            // Opret selve @keyframes reglen i CSS
+            const keyframes = `
+                @keyframes ${animationName} {
+                    to {
+                        transform: translateY(120vh) translateX(${randomX}px) rotate(${randomRotate}deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            
+            // Tilføj de nye keyframes til vores style-tag i head
+            dynamicAnimationsStyle.innerHTML = keyframes;
+            
+            // Anvend animationen på kortet
+            letterCard.style.animation = `${animationName} ${randomDuration}s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards`;
+        });
+    </script>
+
+</body>
+</html>
+
+
