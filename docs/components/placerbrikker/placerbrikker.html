@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Byg et Tal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            background-color: #f7fafc;
+            touch-action: none; /* Forhindrer scroll på touch-enheder under træk */
+            overflow: hidden; /* Forhindrer scroll under træk */
+        }
+
+        /* Farvepalette */
+        .color-1 { background-color: #FAE5C8; border-color: #E2A44A; }
+        .color-2 { background-color: #DEEBD7; border-color: #8CB973; }
+        .color-3 { background-color: #CFE0F3; border-color: #5893D4; }
+        .color-4 { background-color: #FFF5C3; border-color: #FFDC2D; }
+        .color-5 { background-color: #F8CACA; border-color: #E84444; }
+        .color-6 { background-color: #CEEFF4; border-color: #52C7DA; }
+        .color-7 { background-color: #E6CDF5; border-color: #A750DC; }
+
+        #selected-row {
+            min-height: 96px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .item-box {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
+            border-bottom-width: 4px;
+        }
+
+        .clickable-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        #clickable-fields {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+        
+        .item-placing {
+            transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+
+        <div id="selected-row" class="bg-white p-4 rounded-xl mb-6 flex items-center justify-center flex-wrap gap-3">
+            <!-- Tomme pladser genereres her -->
+        </div>
+
+        <div id="clickable-fields" class="p-4 bg-gray-100 rounded-xl flex justify-center gap-3">
+            <!-- Tal-brikker genereres her -->
+        </div>
+
+    </div>
+
+    <script>
+        const selectedRow = document.getElementById('selected-row');
+        const clickableFields = document.getElementById('clickable-fields');
+        const colors = ['color-1', 'color-2', 'color-3', 'color-4', 'color-5', 'color-6', 'color-7', 'color-1', 'color-2', 'color-3'];
+        const numbers = '0123456789'.split('');
+
+        function createItemBox(text, colorClass) {
+            const item = document.createElement('div');
+            item.textContent = text;
+            item.dataset.value = text;
+            item.className = `item-box ${colorClass} text-gray-800 font-semibold text-2xl md:text-3xl rounded-lg cursor-grab w-16 h-16 flex-shrink-0 flex items-center justify-center select-none`;
+            return item;
+        }
+        
+        function createPlaceholderBox() {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'placeholder-box w-16 h-16 bg-slate-100 border-2 border-dashed border-slate-300 rounded-lg flex-shrink-0';
+            return placeholder;
+        }
+        
+        function renderNumbersGame() {
+            clickableFields.innerHTML = '';
+            selectedRow.innerHTML = '';
+
+            for (let i = 0; i < 5; i++) {
+                const topSlot = document.createElement('div');
+                topSlot.appendChild(createPlaceholderBox());
+                selectedRow.appendChild(topSlot);
+            }
+
+            numbers.forEach((num, index) => {
+                const colorClass = colors[index % colors.length];
+                const numberItem = createItemBox(num, colorClass);
+                numberItem.classList.add('clickable-item');
+                numberItem.dataset.originalSlotId = `bottom-slot-${index}`;
+                
+                numberItem.addEventListener('mousedown', handleMouseDown);
+                numberItem.addEventListener('touchstart', handleMouseDown, { passive: false });
+
+
+                const bottomSlot = document.createElement('div');
+                bottomSlot.id = `bottom-slot-${index}`;
+                bottomSlot.appendChild(numberItem);
+                clickableFields.appendChild(bottomSlot);
+            });
+        }
+        
+        // --- NY Fysik-baseret Drag & Drop ---
+        let draggedItem = null;
+        let ghostItem = null;
+        let isDragging = false;
+        let startPos = { x: 0, y: 0 };
+        let offset = { x: 0, y: 0 };
+        let originalParentSlot = null; 
+        let isAnimatingDrop = false;
+
+        // Fysik-variable
+        let pos = { x: 0, y: 0 };
+        let vel = { x: 0, y: 0 };
+        let target = { x: 0, y: 0 };
+        let angle = 0;
+        let angleVel = 0;
+        let angleTarget = 0;
+        const spring = 0.25;
+        const friction = 0.55; 
+        let animationFrameId = null;
+
+        function handleMouseDown(e) {
+            if (isAnimatingDrop || draggedItem) return; // Forhindr nyt træk hvis en brik allerede flytter sig eller er løftet
+            e.preventDefault();
+            draggedItem = e.currentTarget;
+            
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            startPos = { x: clientX, y: clientY };
+
+            const rect = draggedItem.getBoundingClientRect();
+            offset = {
+                x: rect.width / 2, 
+                y: 0,
+            };
+
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+            document.addEventListener('touchmove', handleMouseMove);
+            document.addEventListener('touchend', handleMouseUp);
+        }
+
+        function handleMouseMove(e) {
+            if (!draggedItem) return;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            if (!isDragging) {
+                const dist = Math.hypot(clientX - startPos.x, clientY - startPos.y);
+                if (dist > 10) { 
+                    isDragging = true;
+                    startDrag(clientX, clientY);
+                }
+            }
+            
+            if (isDragging) {
+                target.x = clientX - offset.x;
+                target.y = clientY - offset.y;
+            }
+        }
+        
+        function startDrag(clientX, clientY) {
+            ghostItem = draggedItem.cloneNode(true);
+            ghostItem.style.position = 'fixed';
+            ghostItem.style.zIndex = '1000';
+            ghostItem.style.cursor = 'grabbing';
+            ghostItem.style.pointerEvents = 'none';
+            ghostItem.style.transformOrigin = 'center top';
+            ghostItem.style.transition = 'none';
+            
+            pos.x = target.x = clientX - offset.x;
+            pos.y = target.y = clientY - offset.y;
+            
+            ghostItem.style.left = `${pos.x}px`;
+            ghostItem.style.top = `${pos.y}px`;
+            
+            document.body.appendChild(ghostItem);
+
+            originalParentSlot = draggedItem.parentElement;
+            if (originalParentSlot) {
+                originalParentSlot.replaceChild(createPlaceholderBox(), draggedItem);
+            }
+
+            vel.x = vel.y = 0;
+            angle = angleVel = angleTarget = 0;
+
+            animationFrameId = requestAnimationFrame(physicsLoop);
+        }
+
+        function physicsLoop() {
+            const dx = target.x - pos.x;
+            const dy = target.y - pos.y;
+            
+            const ax = dx * spring;
+            const ay = dy * spring;
+            
+            vel.x += ax;
+            vel.y += ay;
+            
+            vel.x *= friction;
+            vel.y *= friction;
+            
+            pos.x += vel.x;
+            pos.y += vel.y;
+            
+            angleTarget = vel.x * 0.2; 
+            const angle_dx = angleTarget - angle;
+            angleVel += angle_dx * spring;
+            angleVel *= (friction * 1.1);
+            angle += angleVel;
+
+            ghostItem.style.left = `${pos.x}px`;
+            ghostItem.style.top = `${pos.y}px`;
+            ghostItem.style.transform = `rotate(${angle}deg) scale(1.1)`;
+            
+            animationFrameId = requestAnimationFrame(physicsLoop);
+        }
+
+        function handleMouseUp(e) {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('touchmove', handleMouseMove);
+            document.removeEventListener('touchend', handleMouseUp);
+            
+            if (isDragging) {
+                cancelAnimationFrame(animationFrameId);
+                
+                const finalDraggedItem = draggedItem; // Gem brikken lokalt
+                draggedItem = null; // *** RETTELSE: Nulstil state med det samme ***
+
+                const dropZone = findBestDropTarget(ghostItem);
+                const placeholder = dropZone ? dropZone.querySelector('.placeholder-box') : null;
+
+                if (placeholder) { // Vellykket drop
+                    animateDrop(ghostItem, placeholder, () => {
+                        dropZone.replaceChild(finalDraggedItem, placeholder);
+                        cleanupAfterDrag();
+                    });
+                } else if (originalParentSlot) { // Mislykket drop, returner til start
+                    const tempPlaceholder = originalParentSlot.querySelector('.placeholder-box');
+                    if (tempPlaceholder) {
+                        animateDrop(ghostItem, tempPlaceholder, () => {
+                            originalParentSlot.replaceChild(finalDraggedItem, tempPlaceholder);
+                            cleanupAfterDrag();
+                        });
+                    } else { // Fallback hvis start-pladsen er optaget
+                         ghostItem.remove();
+                         if (originalParentSlot) originalParentSlot.appendChild(finalDraggedItem); // Læg den bare tilbage
+                         cleanupAfterDrag();
+                    }
+                }
+            } else if(draggedItem) {
+                const itemToMove = draggedItem;
+                draggedItem = null; // Nulstil state så vi kan interagere igen
+                handleMoveNumber(itemToMove);
+            }
+        }
+
+        function findBestDropTarget(draggedEl) {
+            const dragRect = draggedEl.getBoundingClientRect();
+            const dropZones = document.querySelectorAll('#selected-row > div, #clickable-fields > div');
+
+            let maxOverlap = 0;
+            let bestTarget = null;
+
+            dropZones.forEach(zone => {
+                const zoneRect = zone.getBoundingClientRect();
+                
+                const xOverlap = Math.max(0, Math.min(dragRect.right, zoneRect.right) - Math.max(dragRect.left, zoneRect.left));
+                const yOverlap = Math.max(0, Math.min(dragRect.bottom, zoneRect.bottom) - Math.max(dragRect.top, zoneRect.top));
+                const overlapArea = xOverlap * yOverlap;
+
+                if (overlapArea > maxOverlap) {
+                    maxOverlap = overlapArea;
+                    bestTarget = zone;
+                }
+            });
+            
+            if (maxOverlap > (dragRect.width * dragRect.height) / 4) {
+                 return bestTarget;
+            }
+            return null;
+        }
+
+
+        function animateDrop(item, placeholder, onEndCallback) {
+            isAnimatingDrop = true;
+            const endRect = placeholder.getBoundingClientRect();
+
+            item.classList.add('item-placing');
+
+            // Sørg for at browseren når at registrere class-ændringen før style-ændringen
+            void item.offsetWidth;
+
+            item.style.left = `${endRect.left}px`;
+            item.style.top = `${endRect.top}px`;
+            item.style.transform = 'rotate(0deg) scale(1)';
+
+            // Brug en timer i stedet for 'transitionend' for at være mere robust
+            setTimeout(() => {
+                item.remove();
+                onEndCallback();
+                isAnimatingDrop = false;
+            }, 300); // Matcher transition-duration i CSS
+        }
+        
+        function cleanupAfterDrag() {
+            isDragging = false;
+            // 'draggedItem' er allerede nulstillet
+            ghostItem = null;
+            originalParentSlot = null;
+        }
+
+        // --- Klik-og-Flyv Funktionalitet ---
+        function handleMoveNumber(item) {
+            const isMovingUp = item.closest('#clickable-fields') !== null;
+            let targetPlaceholder;
+
+            if (isMovingUp) {
+                targetPlaceholder = selectedRow.querySelector('.placeholder-box');
+            } else {
+                const originalSlot = document.getElementById(item.dataset.originalSlotId);
+                targetPlaceholder = originalSlot.querySelector('.placeholder-box');
+            }
+            
+            if (targetPlaceholder) {
+                animateMove(item, targetPlaceholder);
+            }
+        }
+
+        function animateMove(item, placeholder) {
+            isAnimatingDrop = true; // Sæt flag for at blokere input under animation
+            if (item.dataset.isMoving === 'true') return;
+            item.dataset.isMoving = 'true';
+            
+            const startRect = item.getBoundingClientRect();
+            const endRect = placeholder.getBoundingClientRect();
+
+            const flyingItem = item.cloneNode(true);
+            flyingItem.style.position = 'fixed';
+            flyingItem.style.zIndex = '1000';
+            flyingItem.style.left = `${startRect.left}px`;
+            flyingItem.style.top = `${startRect.top}px`;
+            flyingItem.style.width = `${startRect.width}px`;
+            flyingItem.style.height = `${startRect.height}px`;
+            flyingItem.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            document.body.appendChild(flyingItem);
+            
+            if (item.parentElement) {
+                item.parentElement.replaceChild(createPlaceholderBox(), item);
+            }
+
+            requestAnimationFrame(() => {
+                const deltaX = endRect.left - startRect.left;
+                const deltaY = endRect.top - startRect.top;
+                flyingItem.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+            });
+            
+            // Brug en timer i stedet for 'transitionend' for at være mere robust
+            setTimeout(() => {
+                 if (placeholder.parentElement) {
+                    placeholder.parentElement.replaceChild(item, placeholder);
+                }
+                flyingItem.remove();
+                delete item.dataset.isMoving;
+                isAnimatingDrop = false; // Frigiv input igen
+            }, 400); // Matcher transition på 0.4s
+        }
+        
+        renderNumbersGame();
+    </script>
+</body>
+</html>
+
+
