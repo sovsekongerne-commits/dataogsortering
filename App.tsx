@@ -5,7 +5,7 @@ import { Bucket } from './components/Bucket';
 import { DraggableItem } from './components/DraggableItem';
 import { LiveChart } from './components/LiveChart';
 import { generateQuizQuestion } from './services/geminiService';
-import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette, ArrowRight, Play, ArrowUp, ArrowDown, Printer, HelpCircle } from 'lucide-react';
+import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette, ArrowRight, ArrowLeft, Play, ArrowUp, ArrowDown, Printer, HelpCircle } from 'lucide-react';
 import { gemMedalje, gemPoint, SPIL_NAVN } from './utils/cookieHelpers';
 import { WorksheetPreview } from './components/WorksheetPreview';
 
@@ -239,14 +239,25 @@ export default function App() {
       
       {/* Header */}
       <header className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border-b-4 border-indigo-50">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-black text-indigo-600 tracking-tight flex flex-wrap items-center gap-2">
-            Dataindsamling og sortering
-            <span className="text-sm bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full font-bold uppercase tracking-widest hidden sm:inline-block">
-              {THEMES[currentThemeIndex].name}
-            </span>
-          </h1>
-          <p className="text-gray-500 font-medium hidden sm:block">Træk tingene ned i kasserne for at lave en sortering!</p>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => { window.location.href = 'https://kongskole.dk'; }}
+            className="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 p-2.5 rounded-xl font-bold flex items-center justify-center transition-colors border-2 border-indigo-100 cursor-pointer shrink-0"
+            aria-label="Tilbage til Kongskole.dk"
+            title="Tilbage til Kongskole.dk"
+          >
+            <ArrowLeft size={20} />
+          </button>
+          <div>
+            <h1 className="text-2xl md:text-3xl font-black text-indigo-600 tracking-tight flex flex-wrap items-center gap-2">
+              Dataindsamling og sortering
+              <span className="text-sm bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full font-bold uppercase tracking-widest hidden sm:inline-block">
+                {THEMES[currentThemeIndex].name}
+              </span>
+            </h1>
+            <p className="text-gray-500 font-medium hidden sm:block">Træk tingene ned i kasserne for at lave en sortering!</p>
+          </div>
         </div>
         <div className="flex gap-2">
           <button 
