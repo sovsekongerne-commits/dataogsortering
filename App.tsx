@@ -5,7 +5,7 @@ import { Bucket } from './components/Bucket';
 import { DraggableItem } from './components/DraggableItem';
 import { LiveChart } from './components/LiveChart';
 import { generateQuizQuestion } from './services/geminiService';
-import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette, ArrowRight, ArrowLeft, Play, ArrowUp, ArrowDown, Printer, HelpCircle } from 'lucide-react';
+import { Trophy, RefreshCcw, Loader2, Sparkles, AlertCircle, Palette, ArrowRight, LogOut, Play, ArrowUp, ArrowDown, Printer, HelpCircle } from 'lucide-react';
 import { gemMedalje, gemPoint, SPIL_NAVN } from './utils/cookieHelpers';
 import { WorksheetPreview } from './components/WorksheetPreview';
 
@@ -247,7 +247,7 @@ export default function App() {
             aria-label="Tilbage til Kongskole.dk"
             title="Tilbage til Kongskole.dk"
           >
-            <ArrowLeft size={20} />
+            <LogOut size={20} />
           </button>
           <div>
             <h1 className="text-2xl md:text-3xl font-black text-indigo-600 tracking-tight flex flex-wrap items-center gap-2">
